@@ -213,4 +213,4 @@ export const expertStacks: ExpertStack[] = [
   },
 ];
 
-export const categories: Category[] = ["Research", "Prototyping", "Career", "Productivity"];
+export const categories: Category[] = ["Research", "Prototyping", "AI", "Career", "Productivity"];
