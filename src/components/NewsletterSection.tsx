@@ -4,23 +4,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Mail } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
+    const trimmed = email.trim();
+    if (!/^\S+@\S+\.\S+$/.test(trimmed)) {
       toast.error("Please enter a valid email");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setEmail("");
-      toast.success("You're in!", { description: "Check your inbox for a confirmation." });
-    }, 600);
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .insert({ email: trimmed, source: "homepage" });
+    setLoading(false);
+
+    if (error) {
+      // Unique violation -> already subscribed
+      if (error.code === "23505") {
+        setEmail("");
+        toast.success("You're already on the list!", {
+          description: "We'll keep you posted.",
+        });
+        return;
+      }
+      toast.error("Couldn't subscribe", {
+        description: "Please try again in a moment.",
+      });
+      return;
+    }
+
+    setEmail("");
+    toast.success("You're in!", {
+      description: "Check your inbox for a confirmation soon.",
+    });
   };
 
   return (

@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories, type Category } from "@/data/tools";
+import { supabase } from "@/integrations/supabase/client";
 
 const submitSchema = z.object({
   name: z.string().trim().min(1, "Tool name is required").max(80, "Max 80 characters"),
@@ -80,9 +81,22 @@ export function SubmitToolDialog({ trigger }: SubmitToolDialogProps) {
     }
 
     setSubmitting(true);
-    // Simulate submission. Wire up to Lovable Cloud later for persistence.
-    await new Promise((r) => setTimeout(r, 600));
+    const payload = result.data;
+    const { error } = await supabase.from("tool_submissions").insert({
+      name: payload.name,
+      url: payload.url,
+      category: payload.category,
+      description: payload.description,
+      email: payload.email ? payload.email : null,
+    });
     setSubmitting(false);
+
+    if (error) {
+      toast.error("Couldn't submit", {
+        description: "Something went wrong on our side. Please try again in a moment.",
+      });
+      return;
+    }
 
     toast.success("Tool submitted!", {
       description: "Thanks — we'll review it and add it to the directory soon.",
