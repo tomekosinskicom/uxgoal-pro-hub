@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
+import { SubmitToolDialog } from "@/components/SubmitToolDialog";
 
 export function SiteHeader() {
   return (
@@ -17,11 +18,16 @@ export function SiteHeader() {
           <a href="#stacks" className="transition-colors hover:text-foreground">Expert Stacks</a>
         </nav>
 
-        <Button size="sm" className="gap-2">
-          <Send className="h-3.5 w-3.5" />
-          Submit a Tool
-        </Button>
+        <SubmitToolDialog
+          trigger={
+            <Button size="sm" className="gap-2">
+              <Send className="h-3.5 w-3.5" />
+              Submit a Tool
+            </Button>
+          }
+        />
       </div>
     </header>
   );
 }
+
