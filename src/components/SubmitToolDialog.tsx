@@ -26,7 +26,7 @@ import { categories, type Category } from "@/data/tools";
 const submitSchema = z.object({
   name: z.string().trim().min(1, "Tool name is required").max(80, "Max 80 characters"),
   url: z.string().trim().url("Enter a valid URL").max(300, "Max 300 characters"),
-  category: z.enum(["Research", "Prototyping", "Career", "Productivity"] as const, {
+  category: z.enum(["Research", "Prototyping", "Career", "Productivity", "AI"] as const, {
     errorMap: () => ({ message: "Pick a category" }),
   }),
   description: z
