@@ -1,4 +1,4 @@
-export type Category = "Research" | "Prototyping" | "Career" | "Productivity";
+export type Category = "Research" | "Prototyping" | "Career" | "Productivity" | "AI";
 
 export interface Tool {
   id: string;
