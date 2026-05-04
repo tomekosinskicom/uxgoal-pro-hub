@@ -46,7 +46,7 @@ export const tools: Tool[] = [
   {
     id: "maze",
     name: "Maze",
-    logo: "https://cdn.worldvectorlogo.com/logos/maze-1.svg",
+    logo: "https://www.google.com/s2/favicons?domain=maze.co&sz=128",
     verdict: "Rapid unmoderated testing that integrates directly with your prototypes.",
     bestFor: "Best for quick usability testing",
     price: "$99/mo",
@@ -85,7 +85,7 @@ export const tools: Tool[] = [
   {
     id: "hotjar",
     name: "Hotjar",
-    logo: "https://cdn.worldvectorlogo.com/logos/hotjar.svg",
+    logo: "https://www.google.com/s2/favicons?domain=hotjar.com&sz=128",
     verdict: "Heatmaps and session recordings to understand real user behavior.",
     bestFor: "Best for behavioral analytics",
     price: "Free",
@@ -98,7 +98,7 @@ export const tools: Tool[] = [
   {
     id: "linear",
     name: "Linear",
-    logo: "https://cdn.worldvectorlogo.com/logos/linear-2.svg",
+    logo: "https://www.google.com/s2/favicons?domain=linear.app&sz=128",
     verdict: "Streamlined issue tracking built for modern product teams.",
     bestFor: "Best for product team workflow",
     price: "Free",
@@ -124,7 +124,7 @@ export const tools: Tool[] = [
   {
     id: "uxcel",
     name: "Uxcel",
-    logo: "https://app.uxcel.com/favicon.ico",
+    logo: "https://www.google.com/s2/favicons?domain=uxcel.com&sz=128",
     verdict: "Gamified UX skill assessments and learning for professionals.",
     bestFor: "Best for skill assessments",
     price: "$16/mo",
@@ -150,7 +150,7 @@ export const tools: Tool[] = [
   {
     id: "whimsical",
     name: "Whimsical",
-    logo: "https://whimsical.com/favicon.ico",
+    logo: "https://www.google.com/s2/favicons?domain=whimsical.com&sz=128",
     verdict: "Beautiful flowcharts, wireframes, and mind maps in seconds.",
     bestFor: "Best for fast wireframes & flows",
     price: "Free",
@@ -163,7 +163,7 @@ export const tools: Tool[] = [
   {
     id: "raycast",
     name: "Raycast",
-    logo: "https://raycast.com/favicon.ico",
+    logo: "https://www.google.com/s2/favicons?domain=raycast.com&sz=128",
     verdict: "Supercharged launcher that replaces half your productivity stack.",
     bestFor: "Best for Mac power users",
     price: "Free",
@@ -176,7 +176,7 @@ export const tools: Tool[] = [
   {
     id: "designlab",
     name: "Designlab",
-    logo: "https://designlab.com/favicon.ico",
+    logo: "https://www.google.com/s2/favicons?domain=designlab.com&sz=128",
     verdict: "Structured UX bootcamp with 1-on-1 mentorship and portfolio projects.",
     bestFor: "Best for structured career switching",
     price: "$399/mo",
@@ -203,7 +203,7 @@ export const tools: Tool[] = [
   {
     id: "galileo",
     name: "Galileo AI",
-    logo: "https://www.usegalileo.ai/favicon.ico",
+    logo: "https://www.google.com/s2/favicons?domain=usegalileo.ai&sz=128",
     verdict: "Text-to-UI generator that produces editable, high-fidelity Figma designs.",
     bestFor: "Best for AI high-fidelity mockups",
     price: "$19/mo",
@@ -216,7 +216,7 @@ export const tools: Tool[] = [
   {
     id: "magician",
     name: "Magician for Figma",
-    logo: "https://magician.design/favicon.ico",
+    logo: "https://www.google.com/s2/favicons?domain=magician.design&sz=128",
     verdict: "AI-powered Figma plugin for icons, copywriting, and image generation.",
     bestFor: "Best AI plugin for Figma",
     price: "$8/mo",
