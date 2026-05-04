@@ -1,4 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { expertStacks } from "@/data/tools";
 
 export function ExpertStacks() {
@@ -18,13 +21,23 @@ export function ExpertStacks() {
 
       <div className="grid gap-6 md:grid-cols-3">
         {expertStacks.map((stack) => (
-          <Card key={stack.id} className="border-border/60 bg-card">
-            <CardContent className="p-6">
+          <Card key={stack.id} className="flex flex-col border-border/60 bg-card">
+            <CardContent className="flex flex-1 flex-col p-6">
               <div className="mb-4 text-3xl">{stack.emoji}</div>
               <h3 className="text-lg font-semibold text-foreground">{stack.name}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{stack.description}</p>
 
-              <ul className="mt-6 space-y-3">
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                <Badge variant="secondary" className="text-xs font-normal">{stack.difficulty}</Badge>
+                <Badge variant="secondary" className="text-xs font-normal">{stack.estimatedCost}</Badge>
+              </div>
+
+              <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Best for
+              </p>
+              <p className="text-sm text-surface-foreground">{stack.bestFor}</p>
+
+              <ul className="mt-5 space-y-3">
                 {stack.tools.map((t) => (
                   <li key={t.name} className="flex items-start gap-3">
                     <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
@@ -35,6 +48,20 @@ export function ExpertStacks() {
                   </li>
                 ))}
               </ul>
+
+              <div className="mt-5 rounded-lg border border-border/60 bg-surface p-3">
+                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Why this stack works
+                </p>
+                <p className="mt-1 text-sm text-surface-foreground">{stack.whyItWorks}</p>
+              </div>
+
+              <Button
+                className="mt-6 w-full"
+                onClick={() => toast.success(`${stack.name} saved`, { description: "We'll guide you through setup soon." })}
+              >
+                Use this stack
+              </Button>
             </CardContent>
           </Card>
         ))}

@@ -13,9 +13,11 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
+        <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
           <a href="#directory" className="transition-colors hover:text-foreground">Tools</a>
+          <a href="#quiz" className="transition-colors hover:text-foreground">Find My Stack</a>
           <a href="#stacks" className="transition-colors hover:text-foreground">Expert Stacks</a>
+          <a href="#sponsor" className="transition-colors hover:text-foreground">Sponsor</a>
         </nav>
 
         <SubmitToolDialog

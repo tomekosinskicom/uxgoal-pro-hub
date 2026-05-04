@@ -6,15 +6,19 @@ import { CategoryFilter } from "@/components/CategoryFilter";
 import { ToolCard } from "@/components/ToolCard";
 import { ExpertStacks } from "@/components/ExpertStacks";
 import { SiteFooter } from "@/components/SiteFooter";
+import { FindMyStackQuiz } from "@/components/FindMyStackQuiz";
+import { SeoSections } from "@/components/SeoSections";
+import { PromoteSection } from "@/components/PromoteSection";
+import { NewsletterSection } from "@/components/NewsletterSection";
 import { tools, type Category } from "@/data/tools";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "UXGoal — Tools to Reach Your UX Goals" },
-      { name: "description", content: "A curated directory of the best tools for UX research, prototyping, productivity, and career growth — reviewed by experts." },
-      { property: "og:title", content: "UXGoal — Tools to Reach Your UX Goals" },
-      { property: "og:description", content: "A curated directory of the best tools for UX research, prototyping, productivity, and career growth." },
+      { title: "UXGoal — Find the Right UX Tools for Your Next Goal" },
+      { name: "description", content: "Curated UX tools, expert stacks, and recommendations for designers, researchers, freelancers, and career switchers. Find the right tools for your goal." },
+      { property: "og:title", content: "UXGoal — Find the Right UX Tools for Your Next Goal" },
+      { property: "og:description", content: "Curated UX tools, expert stacks, and recommendations for designers, researchers, freelancers, and career switchers." },
       { property: "og:type", content: "website" },
     ],
   }),
@@ -25,6 +29,7 @@ function HomePage() {
   const [filter, setFilter] = useState<Category | "All">("All");
 
   const filtered = filter === "All" ? tools : tools.filter((t) => t.category === filter);
+  const sorted = [...filtered].sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
 
   return (
     <div className="min-h-screen">
@@ -40,15 +45,22 @@ function HomePage() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((tool) => (
+          {sorted.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}
         </div>
       </section>
 
-      <div className="border-t border-border/50" />
+      <FindMyStackQuiz />
+
+      <SeoSections />
 
       <ExpertStacks />
+
+      <PromoteSection />
+
+      <NewsletterSection />
+
       <SiteFooter />
     </div>
   );

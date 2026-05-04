@@ -1,10 +1,14 @@
 import { categories } from "@/data/tools";
 
 export function SiteFooter() {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <footer className="border-t border-border/50 bg-background py-16">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-4">
           <div>
             <span className="text-lg font-bold text-foreground">
               UX<span className="text-accent">Goal</span>
@@ -16,14 +20,27 @@ export function SiteFooter() {
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Popular UX Tool Categories
+              Explore
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-sm text-surface-foreground">
+              <li><button onClick={() => scrollTo("directory")} className="transition-colors hover:text-foreground">Tools</button></li>
+              <li><button onClick={() => scrollTo("best-ai-ux")} className="transition-colors hover:text-foreground">AI Tools</button></li>
+              <li><button onClick={() => scrollTo("best-research")} className="transition-colors hover:text-foreground">Research Tools</button></li>
+              <li><button onClick={() => scrollTo("best-career")} className="transition-colors hover:text-foreground">Career Tools</button></li>
+              <li><button onClick={() => scrollTo("stacks")} className="transition-colors hover:text-foreground">Expert Stacks</button></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              Categories
+            </h3>
+            <ul className="space-y-2 text-sm text-surface-foreground">
               {categories.map((cat) => (
                 <li key={cat}>
-                  <span className="text-sm text-surface-foreground transition-colors hover:text-foreground cursor-pointer">
+                  <button onClick={() => scrollTo("directory")} className="transition-colors hover:text-foreground">
                     {cat} Tools
-                  </span>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -31,18 +48,19 @@ export function SiteFooter() {
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Resources
+              Company
             </h3>
             <ul className="space-y-2 text-sm text-surface-foreground">
-              <li className="transition-colors hover:text-foreground cursor-pointer">Submit a Tool</li>
-              <li className="transition-colors hover:text-foreground cursor-pointer">Expert Stacks</li>
-              <li className="transition-colors hover:text-foreground cursor-pointer">About UXGoal</li>
+              <li><button onClick={() => scrollTo("sponsor")} className="transition-colors hover:text-foreground">Submit a Tool</button></li>
+              <li><button onClick={() => scrollTo("sponsor")} className="transition-colors hover:text-foreground">Sponsor UXGoal</button></li>
+              <li><button onClick={() => scrollTo("newsletter")} className="transition-colors hover:text-foreground">Newsletter</button></li>
+              <li><span className="cursor-pointer transition-colors hover:text-foreground">About</span></li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 border-t border-border/50 pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} UXGoal. All rights reserved.
+          © {new Date().getFullYear()} UXGoal. All rights reserved. Some links are affiliate links — they help us keep the directory free.
         </div>
       </div>
     </footer>
