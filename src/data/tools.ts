@@ -172,6 +172,7 @@ export const tools: Tool[] = [
     category: "AI",
     affiliateUrl: "#",
   },
+];
 
 export const expertStacks: ExpertStack[] = [
   {
