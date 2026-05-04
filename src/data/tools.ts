@@ -1,4 +1,4 @@
-export type Category = "Research" | "Prototyping" | "Career" | "Productivity";
+export type Category = "Research" | "Prototyping" | "Career" | "Productivity" | "AI";
 
 export interface Tool {
   id: string;
@@ -127,6 +127,51 @@ export const tools: Tool[] = [
     category: "Career",
     affiliateUrl: "#",
   },
+  {
+    id: "uizard",
+    name: "Uizard",
+    logo: "https://uizard.io/favicon.ico",
+    verdict: "Generate wireframes and UI mockups from text prompts in seconds.",
+    price: "$12/mo",
+    category: "AI",
+    affiliateUrl: "#",
+  },
+  {
+    id: "galileo",
+    name: "Galileo AI",
+    logo: "https://www.usegalileo.ai/favicon.ico",
+    verdict: "Text-to-UI generator that produces editable, high-fidelity Figma designs.",
+    price: "$19/mo",
+    category: "AI",
+    affiliateUrl: "#",
+  },
+  {
+    id: "magician",
+    name: "Magician for Figma",
+    logo: "https://magician.design/favicon.ico",
+    verdict: "AI-powered Figma plugin for icons, copywriting, and image generation.",
+    price: "$8/mo",
+    category: "AI",
+    affiliateUrl: "#",
+  },
+  {
+    id: "chatgpt",
+    name: "ChatGPT",
+    logo: "https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg",
+    verdict: "Brainstorm IA, draft microcopy, and synthesize research in minutes.",
+    price: "Free",
+    category: "AI",
+    affiliateUrl: "#",
+  },
+  {
+    id: "attention-insight",
+    name: "Attention Insight",
+    logo: "https://attentioninsight.com/favicon.ico",
+    verdict: "Predict where users will look before launch with AI heatmaps.",
+    price: "$53/mo",
+    category: "AI",
+    affiliateUrl: "#",
+  },
 ];
 
 export const expertStacks: ExpertStack[] = [
@@ -168,4 +213,4 @@ export const expertStacks: ExpertStack[] = [
   },
 ];
 
-export const categories: Category[] = ["Research", "Prototyping", "Career", "Productivity"];
+export const categories: Category[] = ["Research", "Prototyping", "AI", "Career", "Productivity"];
