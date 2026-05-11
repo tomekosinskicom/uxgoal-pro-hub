@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_readiness_results: {
+        Row: {
+          answers: Json
+          created_at: string
+          email: string | null
+          id: string
+          label: string
+          recommended_stack_id: string | null
+          recommended_tool_ids: string[]
+          score: number
+        }
+        Insert: {
+          answers: Json
+          created_at?: string
+          email?: string | null
+          id?: string
+          label: string
+          recommended_stack_id?: string | null
+          recommended_tool_ids?: string[]
+          score: number
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          email?: string | null
+          id?: string
+          label?: string
+          recommended_stack_id?: string | null
+          recommended_tool_ids?: string[]
+          score?: number
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
