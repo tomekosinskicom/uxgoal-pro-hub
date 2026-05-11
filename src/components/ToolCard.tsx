@@ -1,19 +1,29 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Sparkles, Info } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowUpRight, Sparkles, Info, Calendar, Link2 } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { Tool } from "@/data/tools";
+import { useCompare } from "@/lib/compare-context";
 
 interface ToolCardProps {
   tool: Tool;
 }
 
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
 export function ToolCard({ tool }: ToolCardProps) {
+  const { isSelected, toggle } = useCompare();
+  const checked = isSelected(tool.id);
+
   return (
     <Card className="tool-card relative flex flex-col border-border/60 bg-card">
       {(tool.featured || tool.sponsored) && (
@@ -25,7 +35,7 @@ export function ToolCard({ tool }: ToolCardProps) {
             </Badge>
           )}
           {tool.sponsored && (
-            <Badge variant="outline" className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Badge className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-300 hover:bg-amber-400/10">
               Sponsored
             </Badge>
           )}
@@ -54,6 +64,15 @@ export function ToolCard({ tool }: ToolCardProps) {
             {tool.verdict}
           </p>
 
+          <div className="mt-3 rounded-md border border-border/50 bg-surface/60 p-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Editorial note
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-surface-foreground">
+              {tool.editorialNote}
+            </p>
+          </div>
+
           <div className="mt-3 flex flex-wrap gap-1.5">
             {tool.tags.map((tag) => (
               <span
@@ -63,6 +82,19 @@ export function ToolCard({ tool }: ToolCardProps) {
                 {tag}
               </span>
             ))}
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+            <span className="inline-flex items-center gap-1">
+              <Calendar className="h-3 w-3" />
+              Last reviewed: {formatDate(tool.lastReviewed)}
+            </span>
+            {tool.affiliate && (
+              <span className="inline-flex items-center gap-1 rounded-sm bg-surface px-1.5 py-0.5 font-medium">
+                <Link2 className="h-3 w-3" />
+                Affiliate link
+              </span>
+            )}
           </div>
         </div>
 
@@ -78,17 +110,28 @@ export function ToolCard({ tool }: ToolCardProps) {
           </Button>
         </div>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <button className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground">
-              <Info className="h-3 w-3" />
-              Why we recommend it
-            </button>
-          </PopoverTrigger>
-          <PopoverContent className="w-72 text-sm leading-relaxed text-surface-foreground">
-            {tool.whyRecommend}
-          </PopoverContent>
-        </Popover>
+        <div className="flex items-center justify-between border-t border-border/40 pt-3">
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
+            <Checkbox
+              checked={checked}
+              onCheckedChange={() => toggle(tool.id)}
+              aria-label={`Select ${tool.name} to compare`}
+            />
+            Compare
+          </label>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground">
+                <Info className="h-3 w-3" />
+                Why we recommend it
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-72 text-sm leading-relaxed text-surface-foreground">
+              {tool.whyRecommend}
+            </PopoverContent>
+          </Popover>
+        </div>
       </CardContent>
     </Card>
   );
