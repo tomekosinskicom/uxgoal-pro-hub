@@ -37,11 +37,17 @@ export function CompareBar() {
         </div>
         <div className="flex flex-shrink-0 items-center gap-2">
           <Button variant="ghost" size="sm" onClick={clear}>Clear</Button>
-          <Button asChild size="sm" disabled={selected.length < 2}>
-            <Link to="/compare" search={{ ids: selected.join(",") }} disabled={selected.length < 2}>
+          {selected.length >= 2 ? (
+            <Button asChild size="sm">
+              <Link to="/compare" search={{ ids: selected.join(",") }}>
+                Compare ({selected.length})
+              </Link>
+            </Button>
+          ) : (
+            <Button size="sm" disabled>
               Compare ({selected.length})
-            </Link>
-          </Button>
+            </Button>
+          )}
         </div>
       </div>
     </div>
