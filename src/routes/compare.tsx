@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-import { tools } from "@/data/tools";
+import { tools, type Tool } from "@/data/tools";
 
 const searchSchema = z.object({
   ids: z.string().optional().default(""),
@@ -33,8 +33,10 @@ const featureRows: { key: keyof import("@/data/tools").ToolFeatures; label: stri
 
 function ComparePage() {
   const { ids } = Route.useSearch();
-  const idList = (ids || "").split(",").filter(Boolean);
-  const picked = idList.map((id) => tools.find((t) => t.id === id)).filter((t): t is NonNullable<typeof t> => Boolean(t));
+  const idList: string[] = (ids || "").split(",").filter(Boolean);
+  const picked: Tool[] = idList
+    .map((id: string) => tools.find((t) => t.id === id))
+    .filter((t): t is Tool => Boolean(t));
 
   return (
     <div className="min-h-screen">
