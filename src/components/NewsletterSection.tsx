@@ -6,7 +6,17 @@ import { toast } from "sonner";
 import { Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-export function NewsletterSection() {
+interface NewsletterSectionProps {
+  source?: string;
+  title?: string;
+  description?: string;
+}
+
+export function NewsletterSection({
+  source = "homepage",
+  title = "The AI-era designer roadmap, in your inbox",
+  description = "One short editorial email a week: new tools worth your time, AI workflows that actually work, and the skills mid-level designers need next.",
+}: NewsletterSectionProps) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -20,28 +30,21 @@ export function NewsletterSection() {
     setLoading(true);
     const { error } = await supabase
       .from("newsletter_subscribers")
-      .insert({ email: trimmed, source: "homepage" });
+      .insert({ email: trimmed, source });
     setLoading(false);
 
     if (error) {
-      // Unique violation -> already subscribed
       if (error.code === "23505") {
         setEmail("");
-        toast.success("You're already on the list!", {
-          description: "We'll keep you posted.",
-        });
+        toast.success("You're already on the list!", { description: "We'll keep you posted." });
         return;
       }
-      toast.error("Couldn't subscribe", {
-        description: "Please try again in a moment.",
-      });
+      toast.error("Couldn't subscribe", { description: "Please try again in a moment." });
       return;
     }
 
     setEmail("");
-    toast.success("You're in!", {
-      description: "Check your inbox for a confirmation soon.",
-    });
+    toast.success("You're in!", { description: "Check your inbox for a confirmation soon." });
   };
 
   return (
@@ -53,13 +56,8 @@ export function NewsletterSection() {
               <Mail className="h-3.5 w-3.5 text-accent" />
               Newsletter
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              Get the best UX tools in your inbox
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              One short email with useful UX tools, AI workflows, templates, and
-              career resources.
-            </p>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">{title}</h2>
+            <p className="mt-3 text-muted-foreground">{description}</p>
           </div>
           <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row">
             <Input
