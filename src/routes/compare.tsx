@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-import { tools, type Tool } from "@/data/tools";
+import { getToolHref, hasApprovedAffiliate, tools, type Tool } from "@/data/tools";
 
 const searchSchema = z.object({
   ids: z.string().optional().default(""),
@@ -75,9 +75,12 @@ function ComparePage() {
               </thead>
               <tbody>
                 <tr className="border-b border-border/40">
-                  <td className="px-4 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Category</td>
+                  <td className="px-4 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Stage</td>
                   {picked.map((t) => (
-                    <td key={t.id} className="px-4 py-3 text-surface-foreground">{t.category}</td>
+                    <td key={t.id} className="px-4 py-3 text-surface-foreground">
+                      {t.stage}
+                      {t.aiNative && <span className="ml-2 rounded-md border border-accent/30 bg-accent/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-accent">AI-native</span>}
+                    </td>
                   ))}
                 </tr>
                 {featureRows.map((row) => (
@@ -99,7 +102,7 @@ function ComparePage() {
                   {picked.map((t) => (
                     <td key={t.id} className="px-4 py-3">
                       <Button asChild size="sm" variant="secondary" className="gap-1.5">
-                        <a href={t.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored">
+                        <a href={getToolHref(t)} target="_blank" rel={hasApprovedAffiliate(t) ? "noopener noreferrer sponsored" : "noopener noreferrer"}>
                           Visit {t.name}
                           <ArrowUpRight className="h-3.5 w-3.5" />
                         </a>

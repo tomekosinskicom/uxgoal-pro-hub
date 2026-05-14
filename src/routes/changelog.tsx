@@ -26,7 +26,7 @@ function ChangelogPage() {
       <section className="mx-auto max-w-3xl px-6 pb-20 pt-20">
         <p className="mb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Editorial log</p>
         <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">Changelog</h1>
-        <p className="mt-3 text-muted-foreground">Every meaningful change to the directory and stacks, in plain English.</p>
+        <p className="mt-3 text-muted-foreground">Every meaningful change to the directory, prompts, and tools, in plain English.</p>
 
         <ol className="mt-10 space-y-6">
           {changelog.map((e) => (

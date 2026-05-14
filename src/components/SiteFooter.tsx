@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { categories } from "@/data/tools";
+import { stages } from "@/data/tools";
 import { SubmitToolDialog } from "@/components/SubmitToolDialog";
 
 export function SiteFooter() {
@@ -15,15 +15,16 @@ export function SiteFooter() {
               Become the designer AI can't replace.
             </p>
             <p className="mt-3 text-xs text-muted-foreground">
-              Curated by <span className="text-foreground">[Your name]</span> — a product designer writing about AI-era design workflows.
+              Curated by <span className="text-foreground">Tomek Osiński</span> — a product designer writing about AI-era design workflows.
             </p>
           </div>
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Explore</h3>
             <ul className="space-y-2 text-sm text-surface-foreground">
-              <li><Link to="/" hash="stacks" className="transition-colors hover:text-foreground">Stacks</Link></li>
               <li><Link to="/" hash="directory" className="transition-colors hover:text-foreground">Tools</Link></li>
+              <li><Link to="/" hash="prompts" className="transition-colors hover:text-foreground">Prompts</Link></li>
+              <li><Link to="/skills" className="transition-colors hover:text-foreground">UX Skill Assessment</Link></li>
               <li><Link to="/ai-readiness" className="transition-colors hover:text-foreground">AI Readiness</Link></li>
               <li><Link to="/learn" className="transition-colors hover:text-foreground">Learn</Link></li>
               <li><Link to="/changelog" className="transition-colors hover:text-foreground">Changelog</Link></li>
@@ -31,12 +32,16 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Categories</h3>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">SEO Guides</h3>
             <ul className="space-y-2 text-sm text-surface-foreground">
-              {categories.map((cat) => (
-                <li key={cat}>
+              <li><Link to="/best/ai-tools-for-ux-designers" className="transition-colors hover:text-foreground">Best AI Tools for UX Designers</Link></li>
+              <li><Link to="/best/ai-prototyping-tools-for-ux-designers" className="transition-colors hover:text-foreground">Best AI Prototyping Tools</Link></li>
+              <li><Link to="/best/portfolio-website-builders-for-ux-designers" className="transition-colors hover:text-foreground">Best Portfolio Builders</Link></li>
+              <li className="pt-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tool stages</li>
+              {stages.map((stage) => (
+                <li key={stage}>
                   <Link to="/" hash="directory" className="transition-colors hover:text-foreground">
-                    {cat} Tools
+                    {stage} Tools
                   </Link>
                 </li>
               ))}
@@ -53,6 +58,7 @@ export function SiteFooter() {
               </li>
               <li><Link to="/" hash="newsletter" className="transition-colors hover:text-foreground">Newsletter</Link></li>
               <li><Link to="/compare" className="transition-colors hover:text-foreground">Compare tools</Link></li>
+              <li><Link to="/affiliate-disclosure" className="transition-colors hover:text-foreground">Affiliate disclosure</Link></li>
             </ul>
           </div>
         </div>

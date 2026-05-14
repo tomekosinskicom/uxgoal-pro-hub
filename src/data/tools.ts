@@ -1,4 +1,4 @@
-export type Category = "Research" | "Prototyping" | "Career" | "Productivity" | "AI";
+export type Stage = "Research" | "Design" | "Prototype" | "Test" | "Ship" | "Career";
 
 export interface ToolFeatures {
   pricing: string;
@@ -16,9 +16,15 @@ export interface Tool {
   bestFor: string;
   price: string;
   priceValue: number; // monthly USD; 0 = free
-  category: Category;
+  stage: Stage;
+  aiNative: boolean;
   tags: string[];
+  /** Canonical product URL. Use this until an affiliate link is approved. */
+  url?: string;
   affiliateUrl: string;
+  affiliateStatus?: "none" | "target" | "applied" | "approved" | "rejected";
+  affiliateNetwork?: "Direct" | "Dub" | "Impact" | "PartnerStack" | "Rewardful" | "OpenAffiliate" | "Other";
+  affiliateProgramUrl?: string;
   whyRecommend: string;
   /** 1–2 sentence editorial note in the voice of "why this matters for AI-era designers" */
   editorialNote: string;
@@ -32,17 +38,14 @@ export interface Tool {
   features: ToolFeatures;
 }
 
-export interface ExpertStack {
-  id: string;
-  name: string;
-  tagline: string;
-  emoji: string;
-  whyItWorks: string;
-  estimatedCost: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
-  bestFor: string;
-  badge?: "Editor's Pick" | "Featured";
-  tools: { name: string; reason: string }[];
+export function getToolHref(tool: Tool) {
+  return tool.affiliateStatus === "approved" && tool.affiliateUrl
+    ? tool.affiliateUrl
+    : tool.url ?? tool.affiliateUrl;
+}
+
+export function hasApprovedAffiliate(tool: Tool) {
+  return tool.affiliateStatus === "approved";
 }
 
 const TODAY = "2026-05-01";
@@ -56,9 +59,12 @@ export const tools: Tool[] = [
     bestFor: "Best for collaborative interface design",
     price: "Free",
     priceValue: 0,
-    category: "Prototyping",
+    stage: "Design",
+    aiNative: false,
     tags: ["Design", "Collaboration", "Prototyping"],
+    url: "https://figma.com",
     affiliateUrl: "https://figma.com",
+    affiliateStatus: "none",
     whyRecommend: "Real-time collaboration, deep plugin ecosystem, and the de-facto handoff standard for engineering teams.",
     editorialNote: "If you're 1–5 years in, Figma fluency is table stakes — but it's the AI plugins built on top of it that now separate fast designers from average ones.",
     lastReviewed: TODAY,
@@ -73,9 +79,14 @@ export const tools: Tool[] = [
     bestFor: "Best for designers who code with AI",
     price: "$20/mo",
     priceValue: 20,
-    category: "AI",
+    stage: "Prototype",
+    aiNative: true,
     tags: ["AI", "Coding", "Prototyping"],
+    url: "https://cursor.com",
     affiliateUrl: "https://cursor.com",
+    affiliateStatus: "target",
+    affiliateNetwork: "Direct",
+    affiliateProgramUrl: "https://cursor.com/ambassadors",
     whyRecommend: "Lets a designer turn a Figma idea into a working interactive prototype in an afternoon — without learning a framework.",
     editorialNote: "If you can prompt Cursor to build a working component, you're already operating one rung above designers stuck in static mockups.",
     lastReviewed: TODAY,
@@ -91,9 +102,14 @@ export const tools: Tool[] = [
     bestFor: "Best for prompt-to-UI prototyping",
     price: "$20/mo",
     priceValue: 20,
-    category: "AI",
+    stage: "Prototype",
+    aiNative: true,
     tags: ["AI", "React", "Generative UI"],
+    url: "https://v0.dev",
     affiliateUrl: "https://v0.dev",
+    affiliateStatus: "target",
+    affiliateNetwork: "Dub",
+    affiliateProgramUrl: "https://partners.dub.co/v0",
     whyRecommend: "The fastest path from idea to a working, copy-pasteable React component built on shadcn/Tailwind.",
     editorialNote: "Prompt-to-UI is becoming the new wireframe — designers who can iterate in v0 review their own work the way engineers do.",
     lastReviewed: TODAY,
@@ -108,7 +124,8 @@ export const tools: Tool[] = [
     bestFor: "Best AI prototyping inside Figma",
     price: "Included",
     priceValue: 15,
-    category: "AI",
+    stage: "Prototype",
+    aiNative: true,
     tags: ["AI", "Figma", "Prototyping"],
     affiliateUrl: "https://www.figma.com/make/",
     whyRecommend: "Generative AI that lives where you already work — no context-switching, no export/import dance.",
@@ -124,7 +141,8 @@ export const tools: Tool[] = [
     bestFor: "Best for AI-generated design system pieces",
     price: "$24/mo",
     priceValue: 24,
-    category: "AI",
+    stage: "Design",
+    aiNative: true,
     tags: ["AI", "Design system", "Components"],
     affiliateUrl: "https://magicpatterns.com",
     whyRecommend: "Bridges generated UI and your existing component library — better than starting from a blank canvas every time.",
@@ -141,9 +159,14 @@ export const tools: Tool[] = [
     bestFor: "Best for marketing site wireframes",
     price: "$30/mo",
     priceValue: 30,
-    category: "AI",
+    stage: "Design",
+    aiNative: true,
     tags: ["AI", "Wireframes", "Sitemap"],
+    url: "https://relume.io",
     affiliateUrl: "https://relume.io",
+    affiliateStatus: "target",
+    affiliateNetwork: "OpenAffiliate",
+    affiliateProgramUrl: "https://openaffiliate.dev/programs/relume",
     whyRecommend: "From brief to full sitemap and wireframes in minutes — perfect for client work and side projects.",
     editorialNote: "Relume turns a slow planning week into a one-hour kickoff. Use it to free up time for higher-craft work.",
     lastReviewed: TODAY,
@@ -158,9 +181,14 @@ export const tools: Tool[] = [
     bestFor: "Best for AI-built production sites",
     price: "$15/mo",
     priceValue: 15,
-    category: "AI",
+    stage: "Ship",
+    aiNative: true,
     tags: ["AI", "No-code", "Web"],
+    url: "https://framer.com",
     affiliateUrl: "https://framer.com",
+    affiliateStatus: "target",
+    affiliateNetwork: "Direct",
+    affiliateProgramUrl: "https://www.framer.com/creators",
     whyRecommend: "Closest no-code tool to real production output, now with AI generation and editing baked in.",
     editorialNote: "If your portfolio still lives on Notion, Framer + AI is the fastest credible upgrade.",
     lastReviewed: TODAY,
@@ -175,7 +203,8 @@ export const tools: Tool[] = [
     bestFor: "Best for AI high-fidelity mockups",
     price: "$19/mo",
     priceValue: 19,
-    category: "AI",
+    stage: "Design",
+    aiNative: true,
     tags: ["AI", "Figma", "High-fidelity"],
     affiliateUrl: "https://usegalileo.ai",
     whyRecommend: "On-brand high-fidelity UI from a single prompt — saves hours on first drafts.",
@@ -191,7 +220,8 @@ export const tools: Tool[] = [
     bestFor: "Best for synthesis & microcopy",
     price: "Free",
     priceValue: 0,
-    category: "AI",
+    stage: "Research",
+    aiNative: true,
     tags: ["AI", "Writing", "Synthesis"],
     affiliateUrl: "https://chat.openai.com",
     whyRecommend: "The most flexible AI thinking partner for IA, microcopy, research synthesis, and prep.",
@@ -207,7 +237,8 @@ export const tools: Tool[] = [
     bestFor: "Best for AI wireframing",
     price: "$12/mo",
     priceValue: 12,
-    category: "AI",
+    stage: "Design",
+    aiNative: true,
     tags: ["AI", "Wireframes", "Text-to-UI"],
     affiliateUrl: "https://uizard.io",
     whyRecommend: "Goes from a prompt or screenshot to editable wireframes in seconds — perfect for early ideation.",
@@ -224,7 +255,8 @@ export const tools: Tool[] = [
     bestFor: "Best AI plugin for Figma",
     price: "$8/mo",
     priceValue: 8,
-    category: "AI",
+    stage: "Design",
+    aiNative: true,
     tags: ["AI", "Figma plugin", "Icons"],
     affiliateUrl: "https://magician.design",
     whyRecommend: "One plugin for icons, copy, and imagery — stays in your Figma flow.",
@@ -240,7 +272,8 @@ export const tools: Tool[] = [
     bestFor: "Best for quick usability testing",
     price: "$99/mo",
     priceValue: 99,
-    category: "Research",
+    stage: "Test",
+    aiNative: false,
     tags: ["Usability", "Testing", "AI synthesis"],
     affiliateUrl: "https://maze.co",
     whyRecommend: "Fastest way to validate a Figma prototype with real users — no recruiting headache.",
@@ -256,7 +289,8 @@ export const tools: Tool[] = [
     bestFor: "Best for portfolios, case studies & docs",
     price: "Free",
     priceValue: 0,
-    category: "Productivity",
+    stage: "Career",
+    aiNative: false,
     tags: ["Docs", "Wiki", "AI writing"],
     affiliateUrl: "https://notion.so",
     whyRecommend: "Flexible enough to be your case study repo, project tracker, and thinking surface.",
@@ -272,7 +306,8 @@ export const tools: Tool[] = [
     bestFor: "Best for product team workflow",
     price: "Free",
     priceValue: 0,
-    category: "Productivity",
+    stage: "Ship",
+    aiNative: false,
     tags: ["Issues", "Roadmap", "Teams"],
     affiliateUrl: "https://linear.app",
     whyRecommend: "Speed-first issue tracker that designers actually enjoy using alongside engineers.",
@@ -288,7 +323,8 @@ export const tools: Tool[] = [
     bestFor: "Best for Mac power users",
     price: "Free",
     priceValue: 0,
-    category: "Productivity",
+    stage: "Career",
+    aiNative: false,
     tags: ["Launcher", "Mac", "AI commands"],
     affiliateUrl: "https://raycast.com",
     whyRecommend: "Cuts dozens of micro-frictions out of your day — clipboard, snippets, AI, and window management.",
@@ -304,7 +340,8 @@ export const tools: Tool[] = [
     bestFor: "Best for free 1:1 mentorship",
     price: "Free",
     priceValue: 0,
-    category: "Career",
+    stage: "Career",
+    aiNative: false,
     tags: ["Mentorship", "Community", "Free"],
     affiliateUrl: "https://adplist.org",
     whyRecommend: "Thousands of senior mentors offering free sessions — unbeatable for career switchers and juniors.",
@@ -320,7 +357,8 @@ export const tools: Tool[] = [
     bestFor: "Best for skill assessments",
     price: "$16/mo",
     priceValue: 16,
-    category: "Career",
+    stage: "Career",
+    aiNative: false,
     tags: ["Learning", "Assessments", "Gamified"],
     affiliateUrl: "https://uxcel.com",
     whyRecommend: "Bite-sized lessons paired with assessments that benchmark you against the industry.",
@@ -337,11 +375,12 @@ export const tools: Tool[] = [
     bestFor: "Best for structured career switching",
     price: "$399/mo",
     priceValue: 399,
-    category: "Career",
+    stage: "Career",
+    aiNative: false,
     tags: ["Bootcamp", "Mentorship", "Portfolio"],
     affiliateUrl: "https://designlab.com",
     whyRecommend: "Structured curriculum + mentor accountability — the closest thing to a UX degree, online.",
-    editorialNote: "Worth it if you need accountability. If you can self-direct, the AI-Native Stack will get you further for less.",
+    editorialNote: "Worth it if you need accountability. If you can self-direct, the AI-native workflow will get you further for less.",
     lastReviewed: TODAY,
     affiliate: true,
     features: { pricing: "$399/mo cohorts", freeTier: "No", bestUseCase: "Career switching", aiNative: "Partially", learningCurve: "Medium" },
@@ -354,7 +393,8 @@ export const tools: Tool[] = [
     bestFor: "Best for pre-launch attention testing",
     price: "$53/mo",
     priceValue: 53,
-    category: "AI",
+    stage: "Test",
+    aiNative: true,
     tags: ["AI", "Heatmaps", "Pre-launch"],
     affiliateUrl: "https://attentioninsight.com",
     whyRecommend: "AI-predicted heatmaps let you validate visual hierarchy before you ship a user test.",
@@ -363,115 +403,405 @@ export const tools: Tool[] = [
     sponsored: true,
     features: { pricing: "$53/mo", freeTier: "Limited trial", bestUseCase: "Pre-launch heatmaps", aiNative: "Yes", learningCurve: "Low" },
   },
+
+  // ---------- Research ----------
+  {
+    id: "dovetail",
+    name: "Dovetail",
+    logo: "https://www.google.com/s2/favicons?domain=dovetail.com&sz=128",
+    verdict: "Research repository with AI-powered tagging and synthesis.",
+    bestFor: "Best for centralising user research",
+    price: "From $30/seat",
+    priceValue: 30,
+    stage: "Research",
+    aiNative: true,
+    tags: ["Research", "Repository", "AI synthesis"],
+    affiliateUrl: "https://dovetail.com",
+    whyRecommend: "Turns scattered interview notes into a searchable, taggable knowledge base your team actually revisits.",
+    editorialNote: "If you stop research from dying in Slack threads, you stop being a feature factory. Dovetail is the most opinionated tool for that job.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $30+ per seat", freeTier: "Limited solo plan", bestUseCase: "Research repository", aiNative: "Yes (tagging + summaries)", learningCurve: "Medium" },
+  },
+  {
+    id: "usertesting",
+    name: "UserTesting",
+    logo: "https://www.google.com/s2/favicons?domain=usertesting.com&sz=128",
+    verdict: "Moderated and unmoderated testing with a recruited panel.",
+    bestFor: "Best for fast access to real users",
+    price: "Custom",
+    priceValue: 999,
+    stage: "Research",
+    aiNative: false,
+    tags: ["Usability", "Recruiting", "Video"],
+    affiliateUrl: "https://usertesting.com",
+    whyRecommend: "The fastest path to real-user feedback when you don't have a panel of your own.",
+    editorialNote: "Pricey, but the recruiting alone saves a week. Worth it once a quarter even if you can't expense it monthly.",
+    lastReviewed: TODAY,
+    features: { pricing: "Custom (enterprise)", freeTier: "No", bestUseCase: "Recruited usability testing", aiNative: "Partially (AI insights add-on)", learningCurve: "Medium" },
+  },
+  {
+    id: "hotjar",
+    name: "Hotjar",
+    logo: "https://www.google.com/s2/favicons?domain=hotjar.com&sz=128",
+    verdict: "Heatmaps, session recordings, and on-site surveys for live products.",
+    bestFor: "Best for behavioural insights on live sites",
+    price: "From $32/mo",
+    priceValue: 32,
+    stage: "Research",
+    aiNative: false,
+    tags: ["Heatmaps", "Recordings", "Surveys"],
+    affiliateUrl: "https://hotjar.com",
+    whyRecommend: "Cheap enough to install on a side project, deep enough to defend a redesign at work.",
+    editorialNote: "Watching ten real session recordings will change how you design. Cheaper than another usability test.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $32+", freeTier: "Yes (35 sessions/day)", bestUseCase: "Live-site behaviour analysis", aiNative: "Partially", learningCurve: "Low" },
+  },
+  {
+    id: "sprig",
+    name: "Sprig",
+    logo: "https://www.google.com/s2/favicons?domain=sprig.com&sz=128",
+    verdict: "In-product surveys, replays, and AI-summarised feedback.",
+    bestFor: "Best for in-product micro-surveys",
+    price: "From $175/mo",
+    priceValue: 175,
+    stage: "Research",
+    aiNative: true,
+    tags: ["In-product", "Surveys", "AI insights"],
+    affiliateUrl: "https://sprig.com",
+    whyRecommend: "Targeted in-product surveys that fire on the moment you actually care about — not 'rate your experience' modals.",
+    editorialNote: "Sprig's AI summarisation makes survey data feel like research, not a CSV you'll never open.",
+    lastReviewed: TODAY,
+    features: { pricing: "From $175/mo", freeTier: "Limited free", bestUseCase: "In-product micro-research", aiNative: "Yes (synthesis)", learningCurve: "Medium" },
+  },
+  {
+    id: "otter",
+    name: "Otter.ai",
+    logo: "https://www.google.com/s2/favicons?domain=otter.ai&sz=128",
+    verdict: "Real-time interview transcription and AI-generated summaries.",
+    bestFor: "Best for interview transcripts and summaries",
+    price: "Free / $17/mo",
+    priceValue: 17,
+    stage: "Research",
+    aiNative: true,
+    tags: ["Transcription", "Interviews", "Summaries"],
+    affiliateUrl: "https://otter.ai",
+    whyRecommend: "Frees you up to actually listen during user interviews instead of typing notes.",
+    editorialNote: "Pair it with ChatGPT and you have a one-person research function. Don't quote the AI summary verbatim — verify before sharing.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $17+", freeTier: "300 minutes/mo", bestUseCase: "Interview capture + summary", aiNative: "Yes (core)", learningCurve: "Low" },
+  },
+
+  // ---------- Design ----------
+  {
+    id: "sketch",
+    name: "Sketch",
+    logo: "https://www.google.com/s2/favicons?domain=sketch.com&sz=128",
+    verdict: "Mac-native UI design tool — Figma's older, leaner sibling.",
+    bestFor: "Best for solo Mac designers",
+    price: "$10/mo",
+    priceValue: 10,
+    stage: "Design",
+    aiNative: false,
+    tags: ["Design", "Mac", "Vector"],
+    affiliateUrl: "https://sketch.com",
+    whyRecommend: "Lighter than Figma if you don't need real-time collaboration — and the file format is yours.",
+    editorialNote: "Still a credible answer if your team is small, Mac-only, and tired of Figma's web latency.",
+    lastReviewed: TODAY,
+    features: { pricing: "$10/mo", freeTier: "Trial only", bestUseCase: "Solo / small-team Mac design", aiNative: "Partially (plugins)", learningCurve: "Low" },
+  },
+  {
+    id: "penpot",
+    name: "Penpot",
+    logo: "https://www.google.com/s2/favicons?domain=penpot.app&sz=128",
+    verdict: "Open-source design and prototyping that runs in the browser.",
+    bestFor: "Best free Figma alternative",
+    price: "Free",
+    priceValue: 0,
+    stage: "Design",
+    aiNative: false,
+    tags: ["Open source", "Design", "Free"],
+    affiliateUrl: "https://penpot.app",
+    whyRecommend: "Self-hostable, open standards (SVG), no vendor lock-in. Genuinely usable for solo and small-team work.",
+    editorialNote: "Worth knowing exists. If a future Figma price hike pushes you out, Penpot is the only credible escape hatch.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free (or self-host)", freeTier: "Fully free", bestUseCase: "Open-source design workflow", aiNative: "No", learningCurve: "Low" },
+  },
+  {
+    id: "spline",
+    name: "Spline",
+    logo: "https://www.google.com/s2/favicons?domain=spline.design&sz=128",
+    verdict: "Browser-based 3D design and interactive scenes.",
+    bestFor: "Best for 3D and interactive web visuals",
+    price: "Free / $9/mo",
+    priceValue: 9,
+    stage: "Design",
+    aiNative: false,
+    tags: ["3D", "Interactive", "Web"],
+    affiliateUrl: "https://spline.design",
+    whyRecommend: "The only 3D tool that doesn't feel like Cinema 4D dressed in marketing copy. Real designers can pick it up in a day.",
+    editorialNote: "3D on portfolio sites is becoming a junior-vs-mid signal. Even one Spline scene moves you up a band.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $9+", freeTier: "Yes", bestUseCase: "3D + interactive scenes", aiNative: "Partially", learningCurve: "Medium" },
+  },
+  {
+    id: "visily",
+    name: "Visily",
+    logo: "https://www.google.com/s2/favicons?domain=visily.ai&sz=128",
+    verdict: "AI wireframing and screenshot-to-design conversion.",
+    bestFor: "Best for sketch-to-wireframe",
+    price: "Free / $14/mo",
+    priceValue: 14,
+    stage: "Design",
+    aiNative: true,
+    tags: ["AI", "Wireframes", "Sketch-to-UI"],
+    affiliateUrl: "https://visily.ai",
+    whyRecommend: "Snap a whiteboard sketch, get a wireframe. Galileo for the napkin-and-coffee crowd.",
+    editorialNote: "A useful backup to Uizard when the client emails you a sketch on a Sunday night.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $14+", freeTier: "Yes", bestUseCase: "Sketch / screenshot to wireframe", aiNative: "Yes", learningCurve: "Low" },
+  },
+  {
+    id: "mobbin",
+    name: "Mobbin",
+    logo: "https://www.google.com/s2/favicons?domain=mobbin.com&sz=128",
+    verdict: "Massive library of real app + web UI screenshots for inspiration.",
+    bestFor: "Best for design inspiration and benchmarking",
+    price: "From $15/mo",
+    priceValue: 15,
+    stage: "Design",
+    aiNative: false,
+    tags: ["Inspiration", "Benchmarking", "Patterns"],
+    affiliateUrl: "https://mobbin.com",
+    whyRecommend: "Skip the Dribbble fantasies — Mobbin shows what shipped apps actually look like.",
+    editorialNote: "Reach for Mobbin before designing any pattern from scratch. The 10-minute saved is a sharper artefact.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $15+", freeTier: "Limited free", bestUseCase: "Design inspiration", aiNative: "No", learningCurve: "Low" },
+  },
+
+  // ---------- Prototype ----------
+  {
+    id: "lovable",
+    name: "Lovable",
+    logo: "https://www.google.com/s2/favicons?domain=lovable.dev&sz=128",
+    verdict: "Prompt-to-app builder that ships real React + Supabase code.",
+    bestFor: "Best AI builder for designer-led products",
+    price: "Free / $20/mo",
+    priceValue: 20,
+    stage: "Prototype",
+    aiNative: true,
+    tags: ["AI", "Builder", "Full-stack"],
+    url: "https://lovable.dev",
+    affiliateUrl: "https://lovable.dev",
+    affiliateStatus: "target",
+    affiliateNetwork: "Direct",
+    whyRecommend: "Closest thing to a designer co-founder right now — you can ship a working product in a weekend.",
+    editorialNote: "If you've never owned a side project beyond a Figma file, Lovable removes the last excuse. Yes, this site is built on it.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $20+", freeTier: "Daily message credits", bestUseCase: "Designer-built full apps", aiNative: "Yes (core)", learningCurve: "Low" },
+  },
+  {
+    id: "bolt",
+    name: "Bolt.new",
+    logo: "https://www.google.com/s2/favicons?domain=bolt.new&sz=128",
+    verdict: "AI-powered StackBlitz environment for prompt-to-app generation.",
+    bestFor: "Best for instant prototype-in-browser",
+    price: "Free / $20/mo",
+    priceValue: 20,
+    stage: "Prototype",
+    aiNative: true,
+    tags: ["AI", "Builder", "Browser"],
+    url: "https://bolt.new",
+    affiliateUrl: "https://bolt.new",
+    affiliateStatus: "target",
+    affiliateNetwork: "Direct",
+    whyRecommend: "Generates and runs a real Node/React app in your browser — no setup, no environment headaches.",
+    editorialNote: "Use Bolt when you want a throwaway prototype this hour, Lovable when you want to keep iterating.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $20+", freeTier: "Limited tokens", bestUseCase: "Instant in-browser prototyping", aiNative: "Yes (core)", learningCurve: "Low" },
+  },
+  {
+    id: "protopie",
+    name: "ProtoPie",
+    logo: "https://www.google.com/s2/favicons?domain=protopie.io&sz=128",
+    verdict: "Advanced interactive prototyping with sensors, variables, and conditions.",
+    bestFor: "Best for complex micro-interactions",
+    price: "From $13/mo",
+    priceValue: 13,
+    stage: "Prototype",
+    aiNative: false,
+    tags: ["Prototyping", "Interactions", "Sensors"],
+    affiliateUrl: "https://protopie.io",
+    whyRecommend: "Goes where Figma's prototype mode can't — gestures, sensors, complex state, and device hand-off.",
+    editorialNote: "Niche, but if you're designing native mobile or anything sensor-heavy, this is the credible tool.",
+    lastReviewed: TODAY,
+    features: { pricing: "From $13+", freeTier: "Limited free", bestUseCase: "Advanced interactive prototypes", aiNative: "No", learningCurve: "Medium" },
+  },
+  {
+    id: "origami",
+    name: "Origami Studio",
+    logo: "https://www.google.com/s2/favicons?domain=origami.design&sz=128",
+    verdict: "Meta's free advanced prototyping tool with patch-based logic.",
+    bestFor: "Best free advanced prototyper",
+    price: "Free",
+    priceValue: 0,
+    stage: "Prototype",
+    aiNative: false,
+    tags: ["Prototyping", "Free", "Mac"],
+    affiliateUrl: "https://origami.design",
+    whyRecommend: "Free, Meta-grade, and capable of prototypes that look indistinguishable from production.",
+    editorialNote: "Steep learning curve, but a ProtoPie alternative if budget is zero. Used inside Meta — that's the credibility.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free", freeTier: "Fully free", bestUseCase: "Advanced free prototyping", aiNative: "No", learningCurve: "High" },
+  },
+
+  // ---------- Test ----------
+  {
+    id: "lookback",
+    name: "Lookback",
+    logo: "https://www.google.com/s2/favicons?domain=lookback.com&sz=128",
+    verdict: "Moderated user interviews with built-in note-taking and clips.",
+    bestFor: "Best for moderated remote interviews",
+    price: "From $25/mo",
+    priceValue: 25,
+    stage: "Test",
+    aiNative: false,
+    tags: ["Interviews", "Moderated", "Video"],
+    affiliateUrl: "https://lookback.com",
+    whyRecommend: "Purpose-built for user research calls — Zoom plus highlight clips and shared notes, not Zoom plus chaos.",
+    editorialNote: "Lookback's highlight reels turn a 45-min interview into a 3-min stakeholder share. That's how research influences decisions.",
+    lastReviewed: TODAY,
+    features: { pricing: "From $25+", freeTier: "Trial only", bestUseCase: "Moderated remote interviews", aiNative: "Partially", learningCurve: "Low" },
+  },
+  {
+    id: "optimal-workshop",
+    name: "Optimal Workshop",
+    logo: "https://www.google.com/s2/favicons?domain=optimalworkshop.com&sz=128",
+    verdict: "Card sorting, tree testing, and IA validation in one suite.",
+    bestFor: "Best for information architecture testing",
+    price: "From $208/mo",
+    priceValue: 208,
+    stage: "Test",
+    aiNative: false,
+    tags: ["IA", "Card sort", "Tree test"],
+    affiliateUrl: "https://optimalworkshop.com",
+    whyRecommend: "The only end-to-end suite for IA work — tree tests, card sorts, and first-click testing under one login.",
+    editorialNote: "Pricey for solo use, but no one credibly does IA validation any other way. Try the trial during a real project.",
+    lastReviewed: TODAY,
+    features: { pricing: "From $208+", freeTier: "Limited free", bestUseCase: "IA validation", aiNative: "No", learningCurve: "Medium" },
+  },
+  {
+    id: "playbookux",
+    name: "PlaybookUX",
+    logo: "https://www.google.com/s2/favicons?domain=playbookux.com&sz=128",
+    verdict: "Moderated and unmoderated user research with AI transcript analysis.",
+    bestFor: "Best Maze alternative with recruiting",
+    price: "From $99/mo",
+    priceValue: 99,
+    stage: "Test",
+    aiNative: true,
+    tags: ["Research", "Recruiting", "AI analysis"],
+    affiliateUrl: "https://playbookux.com",
+    whyRecommend: "Recruiting + testing + AI synthesis in one platform — fewer logins than stitching Maze + UserInterviews together.",
+    editorialNote: "Compare directly with Maze on your next study. The AI analysis is closer to useful than most.",
+    lastReviewed: TODAY,
+    features: { pricing: "From $99+", freeTier: "Trial", bestUseCase: "End-to-end user research", aiNative: "Yes (analysis)", learningCurve: "Low" },
+  },
+
+  // ---------- Ship ----------
+  {
+    id: "zeplin",
+    name: "Zeplin",
+    logo: "https://www.google.com/s2/favicons?domain=zeplin.io&sz=128",
+    verdict: "Design-to-engineering handoff with specs, tokens, and Jira links.",
+    bestFor: "Best for structured design handoff",
+    price: "Free / $8/mo",
+    priceValue: 8,
+    stage: "Ship",
+    aiNative: false,
+    tags: ["Handoff", "Specs", "Dev"],
+    affiliateUrl: "https://zeplin.io",
+    whyRecommend: "Solves the 'eng can see Figma, why do we need this?' problem when your team grows past five engineers.",
+    editorialNote: "Worth installing as soon as you have two devs asking for the same thing twice. Cleaner than Figma dev mode for big design systems.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $8+", freeTier: "Yes", bestUseCase: "Design-to-dev handoff", aiNative: "No", learningCurve: "Low" },
+  },
+  {
+    id: "storybook",
+    name: "Storybook",
+    logo: "https://www.google.com/s2/favicons?domain=storybook.js.org&sz=128",
+    verdict: "Open-source UI component workshop and documentation tool.",
+    bestFor: "Best for component library docs",
+    price: "Free",
+    priceValue: 0,
+    stage: "Ship",
+    aiNative: false,
+    tags: ["Components", "Docs", "Open source"],
+    affiliateUrl: "https://storybook.js.org",
+    whyRecommend: "Where your design system actually lives once engineers stop treating Figma as the source of truth.",
+    editorialNote: "Even if you don't write components, knowing what Storybook is — and reviewing it — separates senior designers from mid-level ones.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free (OSS)", freeTier: "Fully free", bestUseCase: "Component documentation", aiNative: "No", learningCurve: "Medium" },
+  },
+  {
+    id: "webflow",
+    name: "Webflow",
+    logo: "https://www.google.com/s2/favicons?domain=webflow.com&sz=128",
+    verdict: "Visual web design that outputs production-grade code and CMS.",
+    bestFor: "Best for designer-built production sites",
+    price: "From $14/mo",
+    priceValue: 14,
+    stage: "Ship",
+    aiNative: false,
+    tags: ["No-code", "Web", "CMS"],
+    url: "https://webflow.com",
+    affiliateUrl: "https://webflow.com",
+    affiliateStatus: "target",
+    affiliateNetwork: "Direct",
+    affiliateProgramUrl: "https://webflow.com/partners",
+    whyRecommend: "The most powerful no-code tool a designer can actually ship to production with — CMS, animations, SEO controls.",
+    editorialNote: "Webflow fluency is becoming a 'designer who ships' signal. Less designer-friendly than Framer, more capable when you grow up.",
+    lastReviewed: TODAY,
+    features: { pricing: "From $14+", freeTier: "2 sites free (with branding)", bestUseCase: "Production web design", aiNative: "Partially", learningCurve: "Medium" },
+  },
+
+  // ---------- Career ----------
+  {
+    id: "readcv",
+    name: "Read.cv",
+    logo: "https://www.google.com/s2/favicons?domain=read.cv&sz=128",
+    verdict: "Designer-focused profile and portfolio platform.",
+    bestFor: "Best for clean designer profiles",
+    price: "Free / $4/mo",
+    priceValue: 4,
+    stage: "Career",
+    aiNative: false,
+    tags: ["Portfolio", "Profile", "Community"],
+    affiliateUrl: "https://read.cv",
+    whyRecommend: "The designer's answer to LinkedIn — calmer, prettier, and built for portfolio work, not recruiter spam.",
+    editorialNote: "Have a Read.cv profile alongside your full portfolio. It's becoming the default \"who is this designer\" landing page.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $4+", freeTier: "Yes", bestUseCase: "Designer profile", aiNative: "No", learningCurve: "Low" },
+  },
+  {
+    id: "pitch",
+    name: "Pitch",
+    logo: "https://www.google.com/s2/favicons?domain=pitch.com&sz=128",
+    verdict: "Collaborative presentations with great defaults and templates.",
+    bestFor: "Best for design-led decks and case studies",
+    price: "Free / $8/mo",
+    priceValue: 8,
+    stage: "Career",
+    aiNative: false,
+    tags: ["Decks", "Case study", "Collaboration"],
+    affiliateUrl: "https://pitch.com",
+    whyRecommend: "Better-looking decks than Google Slides without the lock-in of Keynote — fast for portfolio case studies.",
+    editorialNote: "If your case studies live in Google Slides, you're losing the interview before the call. Move to Pitch or Notion this week.",
+    lastReviewed: TODAY,
+    features: { pricing: "Free / $8+", freeTier: "Generous", bestUseCase: "Design-led decks", aiNative: "Partially", learningCurve: "Low" },
+  },
 ];
 
-export const expertStacks: ExpertStack[] = [
-  {
-    id: "ai-native-designer",
-    name: "AI-Native Designer Stack",
-    tagline: "The stack designers use when AI is part of every project.",
-    emoji: "🤖",
-    whyItWorks: "Each tool covers a stage AI now dominates — generation, prototyping, code, and synthesis. Together they let you ship in days what used to take weeks, without faking craft.",
-    estimatedCost: "~$95/mo",
-    difficulty: "Intermediate",
-    bestFor: "Product designers, 1–5 yrs, going AI-first",
-    badge: "Editor's Pick",
-    tools: [
-      { name: "Cursor", reason: "Designer-friendly AI code editor for real prototypes" },
-      { name: "v0 by Vercel", reason: "Prompt-to-React UI in minutes" },
-      { name: "Figma Make", reason: "AI prototyping native to your canvas" },
-      { name: "Magic Patterns", reason: "Generate design-system-aware pattern variations" },
-      { name: "Relume", reason: "AI sitemap + wireframes for kickoff" },
-      { name: "Galileo AI", reason: "On-brand hi-fi mockups from a prompt" },
-      { name: "Framer AI", reason: "Ship a portfolio or marketing site in a day" },
-      { name: "ChatGPT", reason: "Synthesis, microcopy, and structured thinking" },
-    ],
-  },
-  {
-    id: "mid-level-promotion",
-    name: "Mid-Level Promotion Stack",
-    tagline: "Look like a senior. Ship like one.",
-    emoji: "📈",
-    whyItWorks: "Pairs AI-assisted research and prototyping with the workflow tools senior designers actually rely on. Less time on busywork, more on the artifacts that get you promoted.",
-    estimatedCost: "~$45/mo",
-    difficulty: "Intermediate",
-    bestFor: "2–5 yr designers ready for the next level",
-    tools: [
-      { name: "Maze", reason: "Run your own studies with AI synthesis" },
-      { name: "v0 by Vercel", reason: "Faster, more credible prototypes" },
-      { name: "Notion", reason: "Polished case studies with Notion AI" },
-      { name: "Linear", reason: "Speak fluent product team workflow" },
-      { name: "Raycast", reason: "Custom AI commands for the boring stuff" },
-      { name: "ChatGPT", reason: "Async critique partner that's always on" },
-    ],
-  },
-  {
-    id: "career-switcher",
-    name: "Career Switcher Stack",
-    tagline: "From zero to AI-ready in 90 days.",
-    emoji: "🚀",
-    whyItWorks: "Structured learning + free mentorship + the tools every modern team uses, sequenced so you build an AI-era portfolio, not a 2019 one.",
-    estimatedCost: "~$16/mo (excl. bootcamp)",
-    difficulty: "Beginner",
-    bestFor: "Career switchers & juniors",
-    tools: [
-      { name: "Uxcel", reason: "Build foundational skills with assessments" },
-      { name: "Designlab", reason: "Structured bootcamp with mentorship" },
-      { name: "ADPList", reason: "Free 1:1 mentorship from senior designers" },
-      { name: "Figma", reason: "The tool every team uses" },
-      { name: "v0 by Vercel", reason: "Ship interactive portfolio pieces, not just JPGs" },
-    ],
-  },
-];
-
-export const categories: Category[] = ["AI", "Prototyping", "Research", "Career", "Productivity"];
-
-// ---------------- Find My Stack quiz ----------------
-export type QuizRole = "Junior Designer" | "Senior Designer" | "UX Researcher" | "Freelancer" | "Career Switcher" | "Design Lead";
-export type QuizGoal = "Learn UX" | "Build portfolio" | "Run research" | "Prototype faster" | "Improve workflow" | "Use AI in design";
-export type QuizBudget = "Free" | "Under $20/mo" | "Team budget" | "Enterprise";
-
-export const quizRoles: QuizRole[] = ["Junior Designer", "Senior Designer", "UX Researcher", "Freelancer", "Career Switcher", "Design Lead"];
-export const quizGoals: QuizGoal[] = ["Learn UX", "Build portfolio", "Run research", "Prototype faster", "Improve workflow", "Use AI in design"];
-export const quizBudgets: QuizBudget[] = ["Free", "Under $20/mo", "Team budget", "Enterprise"];
-
-export interface RecommendedStack {
-  title: string;
-  explanation: string;
-  toolIds: string[];
-}
-
-export function recommendStack(role: QuizRole, goal: QuizGoal, budget: QuizBudget): RecommendedStack {
-  const maxPrice =
-    budget === "Free" ? 0 :
-    budget === "Under $20/mo" ? 20 :
-    budget === "Team budget" ? 100 : Infinity;
-
-  let preferredCategories: Category[] = ["AI", "Prototyping", "Productivity"];
-  if (goal === "Run research" || role === "UX Researcher") preferredCategories = ["Research", "AI", "Productivity"];
-  else if (goal === "Use AI in design") preferredCategories = ["AI", "Prototyping", "Productivity"];
-  else if (goal === "Learn UX" || role === "Career Switcher") preferredCategories = ["Career", "AI", "Prototyping"];
-  else if (goal === "Build portfolio") preferredCategories = ["AI", "Prototyping", "Career"];
-
-  const eligible = tools.filter((t) => t.priceValue <= maxPrice);
-  const picked: Tool[] = [];
-  for (const cat of preferredCategories) {
-    const inCat = eligible.filter((t) => t.category === cat && !picked.find((p) => p.id === t.id));
-    picked.push(...inCat.slice(0, 2));
-    if (picked.length >= 5) break;
-  }
-  for (const t of eligible) {
-    if (picked.length >= 5) break;
-    if (!picked.find((p) => p.id === t.id)) picked.push(t);
-  }
-  const finalPicks = picked.slice(0, 5);
-
-  return {
-    title: `Recommended stack for a ${role.toLowerCase()} who wants to ${goal.toLowerCase()}`,
-    explanation: `Built around your ${budget.toLowerCase()} budget and your goal to ${goal.toLowerCase()}. These ${finalPicks.length} tools cover the workflow end-to-end without overlap.`,
-    toolIds: finalPicks.map((t) => t.id),
-  };
-}
+export const stages: Stage[] = ["Research", "Design", "Prototype", "Test", "Ship", "Career"];
 
 // ---------------- Changelog entries ----------------
 export interface ChangelogEntry {
@@ -485,14 +815,14 @@ export const changelog: ChangelogEntry[] = [
   {
     id: "may-2026",
     date: "2026-05-01",
-    title: "Added Figma Make, refreshed Cursor pricing, launched the AI-Native Stack",
-    body: "Three new AI tools added to the directory, the AI-Native Designer Stack is now our flagship recommendation, and we re-reviewed every tool's pricing as of May 1.",
+    title: "Added Figma Make, refreshed Cursor pricing, launched the AI-native workflow",
+    body: "Three new AI tools added to the directory, the AI-native workflow is now our flagship recommendation, and we re-reviewed every tool's pricing as of May 1.",
   },
   {
     id: "apr-2026",
     date: "2026-04-12",
     title: "New diagnostic: AI Readiness Check",
-    body: "A 2-minute self-assessment that scores you and recommends a starting stack — replacing the older 3-question quiz as our default entry point.",
+    body: "A 2-minute self-assessment that scores you and recommends a starting workflow — replacing the older 3-question quiz as our default entry point.",
   },
   {
     id: "mar-2026",
@@ -503,8 +833,8 @@ export const changelog: ChangelogEntry[] = [
   {
     id: "feb-2026",
     date: "2026-02-02",
-    title: "Mid-Level Promotion Stack added",
-    body: "A new curated stack for designers with 2–5 years of experience who want to operate one rung higher.",
+    title: "Mid-level growth workflow added",
+    body: "A new curated workflow for designers with 2–5 years of experience who want to operate one rung higher.",
   },
 ];
 
@@ -521,7 +851,7 @@ export const testimonials: Testimonial[] = [
     id: "t1",
     name: "Maya Chen",
     role: "Product Designer, 3 yrs",
-    quote: "I stopped doom-scrolling AI hot takes and just installed the AI-Native Stack. Six weeks later I prototyped a feature in two days that used to take a sprint.",
+    quote: "I stopped doom-scrolling AI hot takes and just installed the AI-native workflow. Six weeks later I prototyped a feature in two days that used to take a sprint.",
   },
   {
     id: "t2",
@@ -652,7 +982,7 @@ export interface ReadinessResult {
   label: "AI-Curious" | "AI-Adopter" | "AI-Native";
   blurb: string;
   recommendedToolIds: string[];
-  recommendedStackId: string;
+  recommendedWorkflowId: string;
 }
 
 export function scoreReadiness(answers: Record<string, number>): ReadinessResult {
@@ -662,25 +992,26 @@ export function scoreReadiness(answers: Record<string, number>): ReadinessResult
 
   let label: ReadinessResult["label"];
   let blurb: string;
-  let recommendedStackId: string;
+  let recommendedWorkflowId: string;
   let recommendedToolIds: string[];
 
   if (score < 40) {
     label = "AI-Curious";
     blurb = "You're aware of the shift but not yet operating in it. The next 90 days matter — start with foundational AI workflows and one production tool you can show on your portfolio.";
-    recommendedStackId = "career-switcher";
+    recommendedWorkflowId = "career-switcher";
     recommendedToolIds = ["chatgpt", "v0", "notion"];
   } else if (score < 75) {
     label = "AI-Adopter";
-    blurb = "You're using AI but in scattered places. Time to consolidate: pick a small stack you commit to, and start showing AI-augmented work in your portfolio.";
-    recommendedStackId = "mid-level-promotion";
+    blurb = "You're using AI but in scattered places. Time to consolidate: pick a small workflow you commit to, and start showing AI-augmented work in your portfolio.";
+    recommendedWorkflowId = "mid-level-promotion";
     recommendedToolIds = ["v0", "maze", "raycast"];
   } else {
     label = "AI-Native";
     blurb = "You're already operating in the AI era. Your edge is depth: pick the highest-leverage tools, ship more, and write about your process — that's what hiring managers want to see.";
-    recommendedStackId = "ai-native-designer";
+    recommendedWorkflowId = "ai-native-designer";
     recommendedToolIds = ["cursor", "figma-make", "magic-patterns"];
   }
 
-  return { score, label, blurb, recommendedToolIds, recommendedStackId };
+  return { score, label, blurb, recommendedToolIds, recommendedWorkflowId };
 }
+

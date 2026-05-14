@@ -14,7 +14,7 @@ export function HeroSection() {
           <span className="gradient-text">AI can't replace.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Curated tools, expert stacks, and a skill roadmap for product designers
+          Curated tools, practical prompts, and a skill roadmap for product designers
           with 1–5 years of experience adapting to the AI era.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -25,10 +25,10 @@ export function HeroSection() {
             </Link>
           </Button>
           <a
-            href="#stacks"
+            href="#prompts"
             className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
           >
-            Browse the AI-Native Stack →
+            Browse designer prompts →
           </a>
         </div>
       </div>

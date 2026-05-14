@@ -12,9 +12,10 @@ import { ArrowRight, RotateCcw, Sparkles, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   readinessQuestions,
+  getToolHref,
+  hasApprovedAffiliate,
   scoreReadiness,
   tools,
-  expertStacks,
   type ReadinessResult,
 } from "@/data/tools";
 import { supabase } from "@/integrations/supabase/client";
@@ -59,7 +60,7 @@ function AiReadinessPage() {
           label: r.label,
           answers: next,
           recommended_tool_ids: r.recommendedToolIds,
-          recommended_stack_id: r.recommendedStackId,
+          recommended_stack_id: r.recommendedWorkflowId,
         })
         .select("id")
         .single();
@@ -115,7 +116,7 @@ function AiReadinessPage() {
             How AI-ready is your design workflow?
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            10 quick questions. We'll score you and recommend three tools and a stack to close the gap.
+            10 quick questions. We'll score you and recommend three tools plus the next workflow to close the gap.
           </p>
         </div>
       </section>
@@ -193,7 +194,44 @@ function ResultsView({
     () => result.recommendedToolIds.map((id) => tools.find((t) => t.id === id)).filter(Boolean),
     [result.recommendedToolIds]
   );
-  const stack = expertStacks.find((s) => s.id === result.recommendedStackId);
+  const workflow = result.label === "AI-Curious"
+    ? {
+        title: "Foundation workflow",
+        copy: "Start with one repeatable AI workflow: research notes → themes → product opportunities → next design action.",
+        cta: "Browse designer prompts",
+        hash: "prompts",
+      }
+    : result.label === "AI-Adopter"
+      ? {
+          title: "Portfolio workflow",
+          copy: "Turn scattered AI usage into a visible case study: show prompts, iterations, tradeoffs, and the human judgement behind the final design.",
+          cta: "Open prompts",
+          hash: "prompts",
+        }
+      : {
+          title: "Shipping workflow",
+          copy: "Use AI to move from strategy to prototype faster: write a clear spec, generate a first build, critique it, then refine with evidence.",
+          cta: "See best AI tools",
+          hash: "directory",
+        };
+
+  const sevenDayPlan = result.label === "AI-Curious"
+    ? [
+        "Pick one real design problem and ask AI to reframe it as user needs, risks, and hypotheses.",
+        "Use one synthesis prompt on existing notes, reviews, or support tickets.",
+        "Document what the AI got wrong — that judgement is the skill.",
+      ]
+    : result.label === "AI-Adopter"
+      ? [
+          "Turn one AI-assisted task into a reusable workflow with inputs, prompt, output, and review criteria.",
+          "Create a before/after artefact for your portfolio or internal design notes.",
+          "Test one output tool like v0, Figma Make, Framer, Lovable, or Cursor.",
+        ]
+      : [
+          "Write a short product spec, then generate a working prototype from it.",
+          "Critique the prototype against accessibility, edge cases, and product intent.",
+          "Publish the workflow as a case-study section: prompt, iterations, decisions, final output.",
+        ];
 
   return (
     <div>
@@ -223,9 +261,9 @@ function ResultsView({
             t ? (
               <a
                 key={t.id}
-                href={t.affiliateUrl}
+                href={getToolHref(t)}
                 target="_blank"
-                rel="noopener noreferrer sponsored"
+                rel={hasApprovedAffiliate(t) ? "noopener noreferrer sponsored" : "noopener noreferrer"}
                 className="tool-card flex items-center gap-3 rounded-xl border border-border/60 bg-surface p-3"
               >
                 <img src={t.logo} alt="" className="h-8 w-8 object-contain" />
@@ -239,21 +277,32 @@ function ResultsView({
         </div>
       </div>
 
-      {stack && (
-        <div className="mt-8 rounded-xl border border-border/60 bg-surface/60 p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Recommended stack</p>
-          <h3 className="mt-1 text-lg font-semibold text-foreground">{stack.name}</h3>
-          <p className="mt-1 text-sm italic text-muted-foreground">"{stack.tagline}"</p>
-          <div className="mt-4">
-            <Button asChild size="sm">
-              <Link to="/" hash="stacks">
-                See full stack
-                <ArrowRight className="ml-1 h-3.5 w-3.5" />
-              </Link>
-            </Button>
-          </div>
+      <div className="mt-8 rounded-xl border border-border/60 bg-surface/60 p-5">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Recommended workflow</p>
+        <h3 className="mt-1 text-lg font-semibold text-foreground">{workflow.title}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{workflow.copy}</p>
+        <div className="mt-4">
+          <Button asChild size="sm">
+            <Link to={workflow.hash === "directory" ? "/best/ai-tools-for-ux-designers" : "/"} hash={workflow.hash === "directory" ? undefined : workflow.hash}>
+              {workflow.cta}
+              <ArrowRight className="ml-1 h-3.5 w-3.5" />
+            </Link>
+          </Button>
         </div>
-      )}
+      </div>
+
+      <div className="mt-8 rounded-xl border border-border/60 bg-card p-5">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Next 7 days</p>
+        <h3 className="mt-1 text-lg font-semibold text-foreground">Turn this result into visible progress</h3>
+        <div className="mt-4 grid gap-2">
+          {sevenDayPlan.map((item) => (
+            <div key={item} className="flex gap-2 rounded-lg border border-border/50 bg-surface p-3 text-sm text-surface-foreground">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="mt-8 rounded-xl border border-accent/30 bg-accent/5 p-5">
         {emailSaved ? (

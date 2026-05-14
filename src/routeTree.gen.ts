@@ -9,12 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as AiReadinessRouteImport } from './routes/ai-readiness'
+import { Route as AffiliateDisclosureRouteImport } from './routes/affiliate-disclosure'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
+import { Route as BestPortfolioWebsiteBuildersForUxDesignersRouteImport } from './routes/best.portfolio-website-builders-for-ux-designers'
+import { Route as BestAiToolsForUxDesignersRouteImport } from './routes/best.ai-tools-for-ux-designers'
+import { Route as BestAiPrototypingToolsForUxDesignersRouteImport } from './routes/best.ai-prototyping-tools-for-ux-designers'
 
+const SkillsRoute = SkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
@@ -35,52 +46,145 @@ const AiReadinessRoute = AiReadinessRouteImport.update({
   path: '/ai-readiness',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AffiliateDisclosureRoute = AffiliateDisclosureRouteImport.update({
+  id: '/affiliate-disclosure',
+  path: '/affiliate-disclosure',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsSlugRoute = ToolsSlugRouteImport.update({
+  id: '/tools/$slug',
+  path: '/tools/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BestPortfolioWebsiteBuildersForUxDesignersRoute =
+  BestPortfolioWebsiteBuildersForUxDesignersRouteImport.update({
+    id: '/best/portfolio-website-builders-for-ux-designers',
+    path: '/best/portfolio-website-builders-for-ux-designers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BestAiToolsForUxDesignersRoute =
+  BestAiToolsForUxDesignersRouteImport.update({
+    id: '/best/ai-tools-for-ux-designers',
+    path: '/best/ai-tools-for-ux-designers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BestAiPrototypingToolsForUxDesignersRoute =
+  BestAiPrototypingToolsForUxDesignersRouteImport.update({
+    id: '/best/ai-prototyping-tools-for-ux-designers',
+    path: '/best/ai-prototyping-tools-for-ux-designers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/affiliate-disclosure': typeof AffiliateDisclosureRoute
   '/ai-readiness': typeof AiReadinessRoute
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
+  '/skills': typeof SkillsRoute
+  '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
+  '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
+  '/best/portfolio-website-builders-for-ux-designers': typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
+  '/tools/$slug': typeof ToolsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/affiliate-disclosure': typeof AffiliateDisclosureRoute
   '/ai-readiness': typeof AiReadinessRoute
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
+  '/skills': typeof SkillsRoute
+  '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
+  '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
+  '/best/portfolio-website-builders-for-ux-designers': typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
+  '/tools/$slug': typeof ToolsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/affiliate-disclosure': typeof AffiliateDisclosureRoute
   '/ai-readiness': typeof AiReadinessRoute
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
+  '/skills': typeof SkillsRoute
+  '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
+  '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
+  '/best/portfolio-website-builders-for-ux-designers': typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
+  '/tools/$slug': typeof ToolsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ai-readiness' | '/changelog' | '/compare' | '/learn'
+  fullPaths:
+    | '/'
+    | '/affiliate-disclosure'
+    | '/ai-readiness'
+    | '/changelog'
+    | '/compare'
+    | '/learn'
+    | '/skills'
+    | '/best/ai-prototyping-tools-for-ux-designers'
+    | '/best/ai-tools-for-ux-designers'
+    | '/best/portfolio-website-builders-for-ux-designers'
+    | '/tools/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai-readiness' | '/changelog' | '/compare' | '/learn'
-  id: '__root__' | '/' | '/ai-readiness' | '/changelog' | '/compare' | '/learn'
+  to:
+    | '/'
+    | '/affiliate-disclosure'
+    | '/ai-readiness'
+    | '/changelog'
+    | '/compare'
+    | '/learn'
+    | '/skills'
+    | '/best/ai-prototyping-tools-for-ux-designers'
+    | '/best/ai-tools-for-ux-designers'
+    | '/best/portfolio-website-builders-for-ux-designers'
+    | '/tools/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/affiliate-disclosure'
+    | '/ai-readiness'
+    | '/changelog'
+    | '/compare'
+    | '/learn'
+    | '/skills'
+    | '/best/ai-prototyping-tools-for-ux-designers'
+    | '/best/ai-tools-for-ux-designers'
+    | '/best/portfolio-website-builders-for-ux-designers'
+    | '/tools/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AffiliateDisclosureRoute: typeof AffiliateDisclosureRoute
   AiReadinessRoute: typeof AiReadinessRoute
   ChangelogRoute: typeof ChangelogRoute
   CompareRoute: typeof CompareRoute
   LearnRoute: typeof LearnRoute
+  SkillsRoute: typeof SkillsRoute
+  BestAiPrototypingToolsForUxDesignersRoute: typeof BestAiPrototypingToolsForUxDesignersRoute
+  BestAiToolsForUxDesignersRoute: typeof BestAiToolsForUxDesignersRoute
+  BestPortfolioWebsiteBuildersForUxDesignersRoute: typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
+  ToolsSlugRoute: typeof ToolsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/skills': {
+      id: '/skills'
+      path: '/skills'
+      fullPath: '/skills'
+      preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn': {
       id: '/learn'
       path: '/learn'
@@ -109,6 +213,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiReadinessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/affiliate-disclosure': {
+      id: '/affiliate-disclosure'
+      path: '/affiliate-disclosure'
+      fullPath: '/affiliate-disclosure'
+      preLoaderRoute: typeof AffiliateDisclosureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -116,15 +227,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/$slug': {
+      id: '/tools/$slug'
+      path: '/tools/$slug'
+      fullPath: '/tools/$slug'
+      preLoaderRoute: typeof ToolsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best/portfolio-website-builders-for-ux-designers': {
+      id: '/best/portfolio-website-builders-for-ux-designers'
+      path: '/best/portfolio-website-builders-for-ux-designers'
+      fullPath: '/best/portfolio-website-builders-for-ux-designers'
+      preLoaderRoute: typeof BestPortfolioWebsiteBuildersForUxDesignersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best/ai-tools-for-ux-designers': {
+      id: '/best/ai-tools-for-ux-designers'
+      path: '/best/ai-tools-for-ux-designers'
+      fullPath: '/best/ai-tools-for-ux-designers'
+      preLoaderRoute: typeof BestAiToolsForUxDesignersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best/ai-prototyping-tools-for-ux-designers': {
+      id: '/best/ai-prototyping-tools-for-ux-designers'
+      path: '/best/ai-prototyping-tools-for-ux-designers'
+      fullPath: '/best/ai-prototyping-tools-for-ux-designers'
+      preLoaderRoute: typeof BestAiPrototypingToolsForUxDesignersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AffiliateDisclosureRoute: AffiliateDisclosureRoute,
   AiReadinessRoute: AiReadinessRoute,
   ChangelogRoute: ChangelogRoute,
   CompareRoute: CompareRoute,
   LearnRoute: LearnRoute,
+  SkillsRoute: SkillsRoute,
+  BestAiPrototypingToolsForUxDesignersRoute:
+    BestAiPrototypingToolsForUxDesignersRoute,
+  BestAiToolsForUxDesignersRoute: BestAiToolsForUxDesignersRoute,
+  BestPortfolioWebsiteBuildersForUxDesignersRoute:
+    BestPortfolioWebsiteBuildersForUxDesignersRoute,
+  ToolsSlugRoute: ToolsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

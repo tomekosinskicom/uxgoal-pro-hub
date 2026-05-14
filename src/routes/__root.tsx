@@ -1,5 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
+import { CompareBar } from "@/components/CompareBar";
+import { CompareProvider } from "@/lib/compare-context";
 
 import appCss from "../styles.css?url";
 
@@ -33,14 +35,14 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "UXGoal — Become the designer AI can't replace" },
-      { name: "description", content: "Curated tools, expert stacks, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
+      { name: "description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
       { name: "author", content: "UXGoal" },
       { property: "og:title", content: "UXGoal — Become the designer AI can't replace" },
-      { property: "og:description", content: "Curated tools, expert stacks, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
+      { property: "og:description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "UXGoal — Become the designer AI can't replace" },
-      { name: "twitter:description", content: "Curated tools, expert stacks, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
+      { name: "twitter:description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/345463a6-0d0f-4317-a1c0-ccbd02e1bd1a/id-preview-c056fdb4--b26f2eab-6953-4571-9084-1022d35fd189.lovable.app-1777887692448.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/345463a6-0d0f-4317-a1c0-ccbd02e1bd1a/id-preview-c056fdb4--b26f2eab-6953-4571-9084-1022d35fd189.lovable.app-1777887692448.png" },
     ],
@@ -72,9 +74,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   return (
-    <>
+    <CompareProvider>
       <Outlet />
+      <CompareBar />
       <Toaster />
-    </>
+    </CompareProvider>
   );
 }

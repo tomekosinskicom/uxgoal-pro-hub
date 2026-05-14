@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type { Tool } from "@/data/tools";
+import { getToolHref, hasApprovedAffiliate, type Tool } from "@/data/tools";
 import { useCompare } from "@/lib/compare-context";
 
 interface ToolCardProps {
@@ -23,6 +23,8 @@ function formatDate(iso: string) {
 export function ToolCard({ tool }: ToolCardProps) {
   const { isSelected, toggle } = useCompare();
   const checked = isSelected(tool.id);
+  const href = getToolHref(tool);
+  const approvedAffiliate = hasApprovedAffiliate(tool);
 
   return (
     <Card className="tool-card relative flex flex-col border-border/60 bg-card">
@@ -52,9 +54,17 @@ export function ToolCard({ tool }: ToolCardProps) {
               loading="lazy"
             />
           </div>
-          <Badge variant="secondary" className="text-xs font-normal">
-            {tool.category}
-          </Badge>
+          <div className="flex items-center gap-1.5">
+            <Badge variant="secondary" className="text-xs font-normal">
+              {tool.stage}
+            </Badge>
+            {tool.aiNative && (
+              <Badge className="gap-1 border border-accent/30 bg-accent/10 px-2 text-[10px] font-medium uppercase tracking-wider text-accent hover:bg-accent/10">
+                <Sparkles className="h-2.5 w-2.5" />
+                AI-native
+              </Badge>
+            )}
+          </div>
         </div>
 
         <div className="flex-1">
@@ -89,7 +99,7 @@ export function ToolCard({ tool }: ToolCardProps) {
               <Calendar className="h-3 w-3" />
               Last reviewed: {formatDate(tool.lastReviewed)}
             </span>
-            {tool.affiliate && (
+            {approvedAffiliate && (
               <span className="inline-flex items-center gap-1 rounded-sm bg-surface px-1.5 py-0.5 font-medium">
                 <Link2 className="h-3 w-3" />
                 Affiliate link
@@ -103,7 +113,7 @@ export function ToolCard({ tool }: ToolCardProps) {
             {tool.price === "Free" ? "Free" : `From ${tool.price}`}
           </span>
           <Button asChild size="sm" variant="secondary" className="gap-1.5">
-            <a href={tool.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored">
+            <a href={href} target="_blank" rel={approvedAffiliate ? "noopener noreferrer sponsored" : "noopener noreferrer"}>
               View Tool
               <ArrowUpRight className="h-3.5 w-3.5" />
             </a>

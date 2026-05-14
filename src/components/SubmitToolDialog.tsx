@@ -21,15 +21,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categories, type Category } from "@/data/tools";
+import { stages, type Stage } from "@/data/tools";
 import { supabase } from "@/integrations/supabase/client";
 
 const submitSchema = z.object({
   name: z.string().trim().min(1, "Tool name is required").max(80, "Max 80 characters"),
   url: z.string().trim().url("Enter a valid URL").max(300, "Max 300 characters"),
-  category: z.enum(["Research", "Prototyping", "Career", "Productivity", "AI"] as const, {
-    errorMap: () => ({ message: "Pick a category" }),
+  stage: z.enum(["Research", "Design", "Prototype", "Test", "Ship", "Career"] as const, {
+    errorMap: () => ({ message: "Pick a stage" }),
   }),
+  aiNative: z.boolean().default(false),
   description: z
     .string()
     .trim()
@@ -57,13 +58,14 @@ export function SubmitToolDialog({ trigger }: SubmitToolDialogProps) {
   const [form, setForm] = useState({
     name: "",
     url: "",
-    category: "" as Category | "",
+    stage: "" as Stage | "",
+    aiNative: false,
     description: "",
     email: "",
   });
 
   const reset = () => {
-    setForm({ name: "", url: "", category: "", description: "", email: "" });
+    setForm({ name: "", url: "", stage: "", aiNative: false, description: "", email: "" });
     setErrors({});
   };
 
@@ -85,7 +87,7 @@ export function SubmitToolDialog({ trigger }: SubmitToolDialogProps) {
     const { error } = await supabase.from("tool_submissions").insert({
       name: payload.name,
       url: payload.url,
-      category: payload.category,
+      category: payload.aiNative ? `${payload.stage} · AI-native` : payload.stage,
       description: payload.description,
       email: payload.email ? payload.email : null,
     });
@@ -149,24 +151,34 @@ export function SubmitToolDialog({ trigger }: SubmitToolDialogProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tool-category">Category</Label>
+            <Label htmlFor="tool-stage">Stage</Label>
             <Select
-              value={form.category}
-              onValueChange={(value) => setForm({ ...form, category: value as Category })}
+              value={form.stage}
+              onValueChange={(value) => setForm({ ...form, stage: value as Stage })}
             >
-              <SelectTrigger id="tool-category">
-                <SelectValue placeholder="Pick a category" />
+              <SelectTrigger id="tool-stage">
+                <SelectValue placeholder="Pick a stage" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
+                {stages.map((s) => (
+                  <SelectItem key={s} value={s}>
+                    {s}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {errors.category && <p className="text-xs text-destructive">{errors.category}</p>}
+            {errors.stage && <p className="text-xs text-destructive">{errors.stage}</p>}
           </div>
+
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={form.aiNative}
+              onChange={(e) => setForm({ ...form, aiNative: e.target.checked })}
+              className="h-4 w-4"
+            />
+            AI-native (the tool's core value depends on AI)
+          </label>
 
           <div className="space-y-2">
             <Label htmlFor="tool-description">Why it's worth including</Label>
