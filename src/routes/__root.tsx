@@ -44,7 +44,6 @@ export const Route = createRootRoute({
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "icon", type: "image/png", sizes: "512x512", href: "/logo.png" },
       { rel: "apple-touch-icon", href: "/logo.png" },
-      { rel: "canonical", href: "https://uxgoal.com/" },
     ],
     scripts: [
       { src: "https://www.googletagmanager.com/gtag/js?id=G-E7G446CSYF", async: true },
