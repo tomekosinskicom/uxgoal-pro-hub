@@ -181,7 +181,34 @@ function SkillsPage() {
         </Card>
       </section>
 
+      <section className="mx-auto max-w-5xl px-6 pb-24">
+        <div className="mb-8">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">The 8 skills we score</p>
+          <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Explore each skill in depth</h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+            Each skill has its own page covering what's changing in the AI era, the shifts that matter, and what to do about them.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {skillAreas.map((area) => (
+            <Link
+              key={area.id}
+              to="/skills/$skillSlug"
+              params={{ skillSlug: area.slug }}
+              className="group rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-accent/40 hover:bg-surface"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-base font-semibold text-foreground">{area.label}</h3>
+                <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{area.shortDescription}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <SiteFooter />
+
     </div>
   );
 }
