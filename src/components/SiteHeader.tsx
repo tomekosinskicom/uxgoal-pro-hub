@@ -1,17 +1,35 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { tools } from "@/data/tools";
 import logoUrl from "@/assets/logo.png";
 
+const navLinks = [
+  { to: "/", hash: "directory", label: "Tools" },
+  { to: "/", hash: "prompts", label: "Prompts" },
+  { to: "/skills", label: "Skills" },
+  { to: "/ai-readiness", label: "AI Readiness" },
+  { to: "/learn", label: "Learn" },
+  { to: "/", hash: "newsletter", label: "Newsletter" },
+] as const;
 
 export function SiteHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
