@@ -23,7 +23,9 @@ export const Route = createFileRoute("/best/ai-prototyping-tools-for-ux-designer
         content:
           "Tools and workflows for prompt-to-UI, designer-led prototypes, and AI-assisted product experiments.",
       },
+      { property: "og:url", content: "https://uxgoal.com/best/ai-prototyping-tools-for-ux-designers" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/best/ai-prototyping-tools-for-ux-designers" }],
   }),
   component: BestAiPrototypingPage,
 });
