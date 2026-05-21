@@ -27,7 +27,9 @@ export const Route = createFileRoute("/skills")({
         content:
           "Find your strongest UX skills, spot the gaps, and get a focused next-step roadmap for the AI era.",
       },
+      { property: "og:url", content: "https://uxgoal.com/skills" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/skills" }],
   }),
   component: SkillsPage,
 });
