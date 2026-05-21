@@ -71,15 +71,13 @@ function HomePage() {
           </div>
         </section>
 
-        <ChangelogSection />
-
         <TestimonialsSection />
 
         <SeoSections />
 
         <PromoteSection />
 
-        <CuratedBy />
+
 
         <NewsletterSection />
 
