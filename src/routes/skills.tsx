@@ -11,8 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
-import { skillAreas, type SkillArea, type SkillId } from "@/data/skills";
-
+import { skillDetails } from "@/data/skills";
 
 export const Route = createFileRoute("/skills")({
   head: () => ({
@@ -36,8 +35,122 @@ export const Route = createFileRoute("/skills")({
   component: SkillsPage,
 });
 
+type SkillId =
+  | "research"
+  | "product"
+  | "interaction"
+  | "ui"
+  | "systems"
+  | "facilitation"
+  | "data"
+  | "ai";
 
+interface SkillArea {
+  id: SkillId;
+  label: string;
+  prompt: string;
+  options: { label: string; score: number }[];
+  nextStep: string;
+}
 
+const skillAreas: SkillArea[] = [
+  {
+    id: "research",
+    label: "Research",
+    prompt: "When a team needs user insight, what can you confidently run yourself?",
+    options: [
+      { label: "I mostly rely on other people to plan and run research", score: 1 },
+      { label: "I can support interviews or usability tests with guidance", score: 2 },
+      { label: "I can plan, run, synthesize, and present a focused study", score: 3 },
+      { label: "I can shape research strategy and influence product direction", score: 4 },
+    ],
+    nextStep: "Run one small study end-to-end and publish the decision it changed.",
+  },
+  {
+    id: "product",
+    label: "Product thinking",
+    prompt: "How do you usually frame design work?",
+    options: [
+      { label: "As screens or UI tasks", score: 1 },
+      { label: "As user problems with some product context", score: 2 },
+      { label: "As hypotheses, constraints, tradeoffs, and outcomes", score: 3 },
+      { label: "As product strategy: opportunity, risk, metric, and sequencing", score: 4 },
+    ],
+    nextStep: "Rewrite one case study around the product decision, not the interface deliverables.",
+  },
+  {
+    id: "interaction",
+    label: "Interaction design",
+    prompt: "How strong are your flows before they become polished UI?",
+    options: [
+      { label: "I jump into visual design early", score: 1 },
+      { label: "I map happy paths but edge cases are light", score: 2 },
+      { label: "I design states, errors, empty states, and key edge cases", score: 3 },
+      { label: "I can simplify complex systems into clear interaction models", score: 4 },
+    ],
+    nextStep: "Take one product flow and document states, edge cases, and recovery paths.",
+  },
+  {
+    id: "ui",
+    label: "UI craft",
+    prompt: "How would you describe your visual/UI execution?",
+    options: [
+      { label: "Functional, but inconsistent", score: 1 },
+      { label: "Clean enough, usually based on references", score: 2 },
+      { label: "Consistent, accessible, responsive, and production-aware", score: 3 },
+      { label: "High-craft, systematic, and adaptable across brands/platforms", score: 4 },
+    ],
+    nextStep: "Redesign one old screen with a tighter spacing/type/color system and compare before/after.",
+  },
+  {
+    id: "systems",
+    label: "Design systems",
+    prompt: "How comfortable are you with design systems?",
+    options: [
+      { label: "I mainly consume existing components", score: 1 },
+      { label: "I can use variants and follow documentation", score: 2 },
+      { label: "I can design reusable components with states and guidance", score: 3 },
+      { label: "I can shape system architecture, governance, and adoption", score: 4 },
+    ],
+    nextStep: "Create one component spec with anatomy, variants, usage rules, and accessibility notes.",
+  },
+  {
+    id: "facilitation",
+    label: "Facilitation",
+    prompt: "What happens when a workshop or critique needs structure?",
+    options: [
+      { label: "I mostly participate", score: 1 },
+      { label: "I can run simple feedback sessions", score: 2 },
+      { label: "I can facilitate discovery, critique, and prioritisation", score: 3 },
+      { label: "I can handle messy stakeholder rooms and drive decisions", score: 4 },
+    ],
+    nextStep: "Prepare a 45-minute decision workshop with inputs, activities, and a clear output.",
+  },
+  {
+    id: "data",
+    label: "Data & experimentation",
+    prompt: "How do metrics and experiments show up in your process?",
+    options: [
+      { label: "Rarely — I mainly rely on qualitative feedback", score: 1 },
+      { label: "I can read basic analytics when someone shares them", score: 2 },
+      { label: "I define success metrics and use data to refine designs", score: 3 },
+      { label: "I design experiments and connect behaviour data to roadmap decisions", score: 4 },
+    ],
+    nextStep: "Add success metrics and a validation plan to one current design problem.",
+  },
+  {
+    id: "ai",
+    label: "AI workflow literacy",
+    prompt: "How embedded is AI in your design workflow?",
+    options: [
+      { label: "I barely use it", score: 1 },
+      { label: "I use it for brainstorming, copy, or summaries", score: 2 },
+      { label: "I use AI for research synthesis, prototyping, critique, or code", score: 3 },
+      { label: "I have repeatable AI workflows that produce portfolio-grade outputs", score: 4 },
+    ],
+    nextStep: "Build one repeatable AI workflow and document prompts, inputs, outputs, and judgement calls.",
+  },
+];
 
 interface SkillResult {
   score: number;
@@ -182,33 +295,36 @@ function SkillsPage() {
       </section>
 
       <section className="mx-auto max-w-5xl px-6 pb-24">
-        <div className="mb-8">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">The 8 skills we score</p>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Explore each skill in depth</h2>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            Each skill has its own page covering what's changing in the AI era, the shifts that matter, and what to do about them.
+        <div className="mb-6 text-center">
+          <p className="mb-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Go deeper
+          </p>
+          <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+            Explore each skill in depth
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+            See how AI is reshaping each UX skill — and what to do about it.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {skillAreas.map((area) => (
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {skillDetails.map((s) => (
             <Link
-              key={area.id}
+              key={s.slug}
               to="/skills/$skillSlug"
-              params={{ skillSlug: area.slug }}
-              className="group rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-accent/40 hover:bg-surface"
+              params={{ skillSlug: s.slug }}
+              className="filter-chip group rounded-xl border border-border bg-surface p-4 hover:bg-surface-hover"
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-base font-semibold text-foreground">{area.label}</h3>
-                <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-medium text-foreground">{s.label}</span>
+                <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
               </div>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{area.shortDescription}</p>
+              <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{s.tagline}</p>
             </Link>
           ))}
         </div>
       </section>
 
       <SiteFooter />
-
     </div>
   );
 }

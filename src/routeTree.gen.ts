@@ -18,7 +18,7 @@ import { Route as AiReadinessRouteImport } from './routes/ai-readiness'
 import { Route as AffiliateDisclosureRouteImport } from './routes/affiliate-disclosure'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
-import { Route as SkillsSkillSlugRouteImport } from './routes/skills.$skillSlug'
+import { Route as SkillsSkillSlugRouteImport } from './routes/skills_.$skillSlug'
 import { Route as BestPortfolioWebsiteBuildersForUxDesignersRouteImport } from './routes/best.portfolio-website-builders-for-ux-designers'
 import { Route as BestAiToolsForUxDesignersRouteImport } from './routes/best.ai-tools-for-ux-designers'
 import { Route as BestAiPrototypingToolsForUxDesignersRouteImport } from './routes/best.ai-prototyping-tools-for-ux-designers'
@@ -69,9 +69,9 @@ const ToolsSlugRoute = ToolsSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsSkillSlugRoute = SkillsSkillSlugRouteImport.update({
-  id: '/$skillSlug',
-  path: '/$skillSlug',
-  getParentRoute: () => SkillsRoute,
+  id: '/skills_/$skillSlug',
+  path: '/skills/$skillSlug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BestPortfolioWebsiteBuildersForUxDesignersRoute =
   BestPortfolioWebsiteBuildersForUxDesignersRouteImport.update({
@@ -100,7 +100,7 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/skills': typeof SkillsRouteWithChildren
+  '/skills': typeof SkillsRoute
   '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
   '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
   '/best/portfolio-website-builders-for-ux-designers': typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
@@ -115,7 +115,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/skills': typeof SkillsRouteWithChildren
+  '/skills': typeof SkillsRoute
   '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
   '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
   '/best/portfolio-website-builders-for-ux-designers': typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
@@ -131,11 +131,11 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/skills': typeof SkillsRouteWithChildren
+  '/skills': typeof SkillsRoute
   '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
   '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
   '/best/portfolio-website-builders-for-ux-designers': typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
-  '/skills/$skillSlug': typeof SkillsSkillSlugRoute
+  '/skills_/$skillSlug': typeof SkillsSkillSlugRoute
   '/tools/$slug': typeof ToolsSlugRoute
 }
 export interface FileRouteTypes {
@@ -182,7 +182,7 @@ export interface FileRouteTypes {
     | '/best/ai-prototyping-tools-for-ux-designers'
     | '/best/ai-tools-for-ux-designers'
     | '/best/portfolio-website-builders-for-ux-designers'
-    | '/skills/$skillSlug'
+    | '/skills_/$skillSlug'
     | '/tools/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -194,10 +194,11 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   LearnRoute: typeof LearnRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  SkillsRoute: typeof SkillsRouteWithChildren
+  SkillsRoute: typeof SkillsRoute
   BestAiPrototypingToolsForUxDesignersRoute: typeof BestAiPrototypingToolsForUxDesignersRoute
   BestAiToolsForUxDesignersRoute: typeof BestAiToolsForUxDesignersRoute
   BestPortfolioWebsiteBuildersForUxDesignersRoute: typeof BestPortfolioWebsiteBuildersForUxDesignersRoute
+  SkillsSkillSlugRoute: typeof SkillsSkillSlugRoute
   ToolsSlugRoute: typeof ToolsSlugRoute
 }
 
@@ -266,12 +267,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/skills/$skillSlug': {
-      id: '/skills/$skillSlug'
-      path: '/$skillSlug'
+    '/skills_/$skillSlug': {
+      id: '/skills_/$skillSlug'
+      path: '/skills/$skillSlug'
       fullPath: '/skills/$skillSlug'
       preLoaderRoute: typeof SkillsSkillSlugRouteImport
-      parentRoute: typeof SkillsRoute
+      parentRoute: typeof rootRouteImport
     }
     '/best/portfolio-website-builders-for-ux-designers': {
       id: '/best/portfolio-website-builders-for-ux-designers'
@@ -297,17 +298,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface SkillsRouteChildren {
-  SkillsSkillSlugRoute: typeof SkillsSkillSlugRoute
-}
-
-const SkillsRouteChildren: SkillsRouteChildren = {
-  SkillsSkillSlugRoute: SkillsSkillSlugRoute,
-}
-
-const SkillsRouteWithChildren =
-  SkillsRoute._addFileChildren(SkillsRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AffiliateDisclosureRoute: AffiliateDisclosureRoute,
@@ -316,12 +306,13 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   LearnRoute: LearnRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  SkillsRoute: SkillsRouteWithChildren,
+  SkillsRoute: SkillsRoute,
   BestAiPrototypingToolsForUxDesignersRoute:
     BestAiPrototypingToolsForUxDesignersRoute,
   BestAiToolsForUxDesignersRoute: BestAiToolsForUxDesignersRoute,
   BestPortfolioWebsiteBuildersForUxDesignersRoute:
     BestPortfolioWebsiteBuildersForUxDesignersRoute,
+  SkillsSkillSlugRoute: SkillsSkillSlugRoute,
   ToolsSlugRoute: ToolsSlugRoute,
 }
 export const routeTree = rootRouteImport
