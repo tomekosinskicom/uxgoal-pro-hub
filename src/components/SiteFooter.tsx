@@ -15,7 +15,7 @@ export function SiteFooter() {
               Become the designer AI can't replace.
             </p>
             <p className="mt-3 text-xs text-muted-foreground">
-              Curated by <span className="text-foreground">Tomek Osiński</span> — a product designer writing about AI-era design workflows.
+              Curated notes on AI-era design workflows for product designers.
             </p>
           </div>
 
