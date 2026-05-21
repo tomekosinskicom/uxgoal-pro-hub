@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getSkillBySlug, skillDetails } from "@/data/skills";
 
 export const Route = createFileRoute("/skills_/$skillSlug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { skill: import("@/data/skills").SkillDetail } => {
     const skill = getSkillBySlug(params.skillSlug);
     if (!skill) throw notFound();
     return { skill };
