@@ -1,17 +1,35 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { tools } from "@/data/tools";
 import logoUrl from "@/assets/logo.png";
 
+const navLinks = [
+  { to: "/", hash: "directory", label: "Tools" },
+  { to: "/", hash: "prompts", label: "Prompts" },
+  { to: "/skills", label: "Skills" },
+  { to: "/ai-readiness", label: "AI Readiness" },
+  { to: "/learn", label: "Learn" },
+  { to: "/", hash: "newsletter", label: "Newsletter" },
+] as const;
 
 export function SiteHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -46,13 +64,19 @@ export function SiteHeader() {
 
 
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <Link to="/" hash="directory" className="transition-colors hover:text-foreground">Tools</Link>
-          <Link to="/" hash="prompts" className="transition-colors hover:text-foreground">Prompts</Link>
-          <Link to="/skills" className="transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }}>Skills</Link>
-          <Link to="/ai-readiness" className="transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }}>AI Readiness</Link>
-          <Link to="/learn" className="transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }}>Learn</Link>
-          <Link to="/" hash="newsletter" className="transition-colors hover:text-foreground">Newsletter</Link>
+          {navLinks.map((l) => (
+            <Link
+              key={l.label}
+              to={l.to}
+              hash={"hash" in l ? l.hash : undefined}
+              className="transition-colors hover:text-foreground"
+              activeProps={!("hash" in l) ? { className: "text-foreground" } : undefined}
+            >
+              {l.label}
+            </Link>
+          ))}
         </nav>
+
 
         <Popover open={open && !!q.trim()} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -92,7 +116,39 @@ export function SiteHeader() {
             )}
           </PopoverContent>
         </Popover>
+
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-72">
+            <SheetHeader>
+              <SheetTitle>
+                <span className="text-lg font-bold tracking-tight text-foreground">
+                  UX<span className="text-accent">Goal</span>
+                </span>
+              </SheetTitle>
+            </SheetHeader>
+            <nav className="mt-6 flex flex-col gap-1">
+              {navLinks.map((l) => (
+                <SheetClose asChild key={l.label}>
+                  <Link
+                    to={l.to}
+                    hash={"hash" in l ? l.hash : undefined}
+                    className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                    activeProps={!("hash" in l) ? { className: "bg-surface text-foreground" } : undefined}
+                  >
+                    {l.label}
+                  </Link>
+                </SheetClose>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );
+
 }
