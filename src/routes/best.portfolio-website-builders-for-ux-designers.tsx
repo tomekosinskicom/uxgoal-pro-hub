@@ -23,7 +23,9 @@ export const Route = createFileRoute("/best/portfolio-website-builders-for-ux-de
         content:
           "Choose the right portfolio builder for UX case studies, personal positioning, and AI-era designer credibility.",
       },
+      { property: "og:url", content: "https://uxgoal.com/best/portfolio-website-builders-for-ux-designers" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/best/portfolio-website-builders-for-ux-designers" }],
   }),
   component: PortfolioBuildersPage,
 });

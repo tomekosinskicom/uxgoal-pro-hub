@@ -9,6 +9,12 @@ import { Button } from "@/components/ui/button";
 import { ToolCard } from "@/components/ToolCard";
 import { tools } from "@/data/tools";
 
+const faq: [string, string][] = [
+  ["Should junior UX designers use AI tools?", "Yes — but not as a replacement for fundamentals. Use AI to produce more drafts, ask better questions, and learn faster. Still practise research, interaction design, product thinking, and critique."],
+  ["What is the best first AI tool for UX?", "Start with one general thinking tool such as ChatGPT plus one output tool such as Figma Make, v0, or Cursor depending on whether you design, prototype, or code."],
+  ["Are AI-generated designs portfolio-worthy?", "Only if you show the judgement behind them: brief, constraints, iterations, tradeoffs, validation, and what you changed. Raw AI output is not a case study."],
+];
+
 export const Route = createFileRoute("/best/ai-tools-for-ux-designers")({
   head: () => ({
     meta: [
@@ -23,6 +29,22 @@ export const Route = createFileRoute("/best/ai-tools-for-ux-designers")({
         property: "og:description",
         content:
           "A curated AI-era toolkit for UX/product designers who want to research faster, prototype better, and ship more credible work.",
+      },
+      { property: "og:url", content: "https://uxgoal.com/best/ai-tools-for-ux-designers" },
+    ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/best/ai-tools-for-ux-designers" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faq.map(([q, a]) => ({
+            "@type": "Question",
+            name: q,
+            acceptedAnswer: { "@type": "Answer", text: a },
+          })),
+        }),
       },
     ],
   }),
@@ -156,11 +178,7 @@ function BestAiToolsPage() {
       <section className="mx-auto max-w-4xl px-6 py-14">
         <h2 className="text-3xl font-bold tracking-tight text-foreground">FAQ</h2>
         <div className="mt-6 divide-y divide-border/60 rounded-2xl border border-border/60 bg-card">
-          {[
-            ["Should junior UX designers use AI tools?", "Yes — but not as a replacement for fundamentals. Use AI to produce more drafts, ask better questions, and learn faster. Still practise research, interaction design, product thinking, and critique."],
-            ["What is the best first AI tool for UX?", "Start with one general thinking tool such as ChatGPT plus one output tool such as Figma Make, v0, or Cursor depending on whether you design, prototype, or code."],
-            ["Are AI-generated designs portfolio-worthy?", "Only if you show the judgement behind them: brief, constraints, iterations, tradeoffs, validation, and what you changed. Raw AI output is not a case study."],
-          ].map(([q, a]) => (
+          {faq.map(([q, a]) => (
             <div key={q} className="p-5">
               <h3 className="font-semibold text-foreground">{q}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p>

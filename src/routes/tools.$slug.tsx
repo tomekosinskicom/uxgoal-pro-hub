@@ -14,15 +14,47 @@ export const Route = createFileRoute("/tools/$slug")({
     if (!tool) throw notFound();
     return { tool };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const t = loaderData?.tool;
     if (!t) return { meta: [{ title: "Tool not found — UXGoal" }] };
+    const url = `https://uxgoal.com/tools/${params.slug}`;
     return {
       meta: [
         { title: `${t.name} review — UXGoal` },
         { name: "description", content: `${t.verdict} ${t.editorialNote}`.slice(0, 200) },
         { property: "og:title", content: `${t.name} review — UXGoal` },
         { property: "og:description", content: t.verdict },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: t.name,
+            description: t.verdict,
+            image: t.logo,
+            url,
+            category: t.stage,
+            offers: {
+              "@type": "Offer",
+              price: t.price === "Free" ? "0" : undefined,
+              priceCurrency: "USD",
+              priceSpecification: t.price !== "Free" ? { "@type": "PriceSpecification", price: t.price } : undefined,
+              url: t.url,
+              availability: "https://schema.org/InStock",
+            },
+            review: {
+              "@type": "Review",
+              author: { "@type": "Organization", name: "UXGoal" },
+              reviewBody: t.editorialNote,
+              datePublished: t.lastReviewed,
+            },
+          }),
+        },
       ],
     };
   },

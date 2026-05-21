@@ -27,7 +27,9 @@ export const Route = createFileRoute("/ai-readiness")({
       { name: "description", content: "A 2-minute diagnostic for product designers (1–5 yrs) to score how AI-ready your workflow is — and what to upgrade next." },
       { property: "og:title", content: "AI Readiness Check — UXGoal" },
       { property: "og:description", content: "Score your AI readiness as a product designer in 2 minutes." },
+      { property: "og:url", content: "https://uxgoal.com/ai-readiness" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/ai-readiness" }],
   }),
   component: AiReadinessPage,
 });

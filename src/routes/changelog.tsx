@@ -10,7 +10,9 @@ export const Route = createFileRoute("/changelog")({
       { name: "description", content: "What changed on UXGoal — new tools, refreshed reviews, and editorial updates for AI-era product designers." },
       { property: "og:title", content: "Changelog — UXGoal" },
       { property: "og:description", content: "What changed on UXGoal — new tools, refreshed reviews, and editorial updates." },
+      { property: "og:url", content: "https://uxgoal.com/changelog" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/changelog" }],
   }),
   component: ChangelogPage,
 });

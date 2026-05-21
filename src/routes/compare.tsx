@@ -18,7 +18,9 @@ export const Route = createFileRoute("/compare")({
       { name: "description", content: "Side-by-side comparison of UX and AI design tools — features, pricing, and editorial notes." },
       { property: "og:title", content: "Compare UX tools — UXGoal" },
       { property: "og:description", content: "Side-by-side comparison of UX and AI design tools." },
+      { property: "og:url", content: "https://uxgoal.com/compare" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/compare" }],
   }),
   component: ComparePage,
 });

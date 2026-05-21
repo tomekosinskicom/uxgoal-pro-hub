@@ -1,0 +1,21 @@
+# UXGoal
+
+> Curated AI tools, prompts, and a skill roadmap for UX and product designers adapting to the AI era.
+
+UXGoal helps English-speaking, junior-to-mid product designers (1–5 years experience) become designers AI can't replace. We publish opinionated tool reviews, an AI readiness diagnostic, a UX skill assessment, and editorial guides.
+
+## Pages
+
+- [Home](/): Best AI tools for UX designers in 2026 — directory, prompts, and skill roadmap.
+- [AI Readiness Check](/ai-readiness): 2-minute diagnostic that scores how AI-ready your design workflow is.
+- [UX Skill Assessment](/skills): Score research, product thinking, UI craft, systems, facilitation, data, and AI literacy.
+- [Best AI Tools for UX Designers](/best/ai-tools-for-ux-designers): Opinionated shortlist by workflow.
+- [Best AI Prototyping Tools for UX Designers](/best/ai-prototyping-tools-for-ux-designers): Prompt-to-UI and designer-led prototype tools.
+- [Best Portfolio Website Builders for UX Designers](/best/portfolio-website-builders-for-ux-designers): Framer, Webflow, Notion, Read.cv and more.
+- [Compare](/compare): Side-by-side comparison of UX and AI design tools.
+- [Changelog](/changelog): Editorial updates to the directory and reviews.
+- [Learn](/learn): AI-era skill roadmap (early access).
+
+## Optional
+
+- [Affiliate Disclosure](/affiliate-disclosure): How UXGoal uses affiliate and sponsored links.

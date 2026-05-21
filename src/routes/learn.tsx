@@ -10,7 +10,9 @@ export const Route = createFileRoute("/learn")({
       { name: "description", content: "An AI-era skill roadmap for product designers (1–5 yrs). Coming soon — get early access." },
       { property: "og:title", content: "Learn — UXGoal" },
       { property: "og:description", content: "AI-era skill roadmap for product designers. Coming soon." },
+      { property: "og:url", content: "https://uxgoal.com/learn" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/learn" }],
   }),
   component: LearnPage,
 });
