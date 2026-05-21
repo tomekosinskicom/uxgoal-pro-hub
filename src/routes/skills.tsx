@@ -294,8 +294,6 @@ function SkillsPage() {
         </Card>
       </section>
 
-      </section>
-
       <section className="mx-auto max-w-5xl px-6 pb-24">
         <div className="mb-6 text-center">
           <p className="mb-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
