@@ -28,6 +28,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:title", content: "Best AI Tools for UX Designers in 2026" },
       { name: "twitter:description", content: "Curated AI tools, prompts, and skills for UX designers." },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/" }],
   }),
   component: HomePage,
 });
