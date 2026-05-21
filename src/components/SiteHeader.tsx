@@ -64,13 +64,19 @@ export function SiteHeader() {
 
 
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <Link to="/" hash="directory" className="transition-colors hover:text-foreground">Tools</Link>
-          <Link to="/" hash="prompts" className="transition-colors hover:text-foreground">Prompts</Link>
-          <Link to="/skills" className="transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }}>Skills</Link>
-          <Link to="/ai-readiness" className="transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }}>AI Readiness</Link>
-          <Link to="/learn" className="transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }}>Learn</Link>
-          <Link to="/" hash="newsletter" className="transition-colors hover:text-foreground">Newsletter</Link>
+          {navLinks.map((l) => (
+            <Link
+              key={l.label}
+              to={l.to}
+              hash={"hash" in l ? l.hash : undefined}
+              className="transition-colors hover:text-foreground"
+              activeProps={!("hash" in l) ? { className: "text-foreground" } : undefined}
+            >
+              {l.label}
+            </Link>
+          ))}
         </nav>
+
 
         <Popover open={open && !!q.trim()} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
