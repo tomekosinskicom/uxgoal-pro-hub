@@ -57,7 +57,8 @@ export const Route = createFileRoute("/skills/$skillSlug")({
 });
 
 function SkillPage() {
-  const { area } = Route.useLoaderData();
+  const { area } = Route.useLoaderData() as { area: (typeof skillAreas)[number] };
+
   const others = skillAreas.filter((a) => a.id !== area.id).slice(0, 4);
 
   return (
