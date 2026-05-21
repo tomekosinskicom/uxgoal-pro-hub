@@ -8,6 +8,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { tools } from "@/data/tools";
+import logoUrl from "@/assets/logo.png";
+
 
 export function SiteHeader() {
   const [q, setQ] = useState("");
@@ -36,10 +38,12 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
         <Link to="/" className="flex items-center gap-2">
+          <img src={logoUrl} alt="UXGoal logo" width={28} height={28} className="h-7 w-7" />
           <span className="text-xl font-bold tracking-tight text-foreground">
             UX<span className="text-accent">Goal</span>
           </span>
         </Link>
+
 
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
           <Link to="/" hash="directory" className="transition-colors hover:text-foreground">Tools</Link>

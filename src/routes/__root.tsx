@@ -41,6 +41,9 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: "/logo.png" },
+      { rel: "apple-touch-icon", href: "/logo.png" },
       { rel: "canonical", href: "https://uxgoal.com/" },
     ],
     scripts: [
