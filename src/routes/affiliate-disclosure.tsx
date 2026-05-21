@@ -19,7 +19,9 @@ export const Route = createFileRoute("/affiliate-disclosure")({
         content:
           "How UXGoal uses affiliate links, sponsored placements, and editorial recommendations.",
       },
+      { property: "og:url", content: "https://uxgoal.com/affiliate-disclosure" },
     ],
+    links: [{ rel: "canonical", href: "https://uxgoal.com/affiliate-disclosure" }],
   }),
   component: AffiliateDisclosurePage,
 });
