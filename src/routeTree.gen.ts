@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ChangelogRouteImport } from './routes/changelog'
@@ -24,6 +25,11 @@ import { Route as BestAiPrototypingToolsForUxDesignersRouteImport } from './rout
 const SkillsRoute = SkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnRoute = LearnRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
   '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
   '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
   '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
   '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
   '/best/ai-prototyping-tools-for-ux-designers': typeof BestAiPrototypingToolsForUxDesignersRoute
   '/best/ai-tools-for-ux-designers': typeof BestAiToolsForUxDesignersRoute
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/learn'
+    | '/sitemap.xml'
     | '/skills'
     | '/best/ai-prototyping-tools-for-ux-designers'
     | '/best/ai-tools-for-ux-designers'
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/learn'
+    | '/sitemap.xml'
     | '/skills'
     | '/best/ai-prototyping-tools-for-ux-designers'
     | '/best/ai-tools-for-ux-designers'
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/learn'
+    | '/sitemap.xml'
     | '/skills'
     | '/best/ai-prototyping-tools-for-ux-designers'
     | '/best/ai-tools-for-ux-designers'
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   ChangelogRoute: typeof ChangelogRoute
   CompareRoute: typeof CompareRoute
   LearnRoute: typeof LearnRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillsRoute: typeof SkillsRoute
   BestAiPrototypingToolsForUxDesignersRoute: typeof BestAiPrototypingToolsForUxDesignersRoute
   BestAiToolsForUxDesignersRoute: typeof BestAiToolsForUxDesignersRoute
@@ -183,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/skills'
       fullPath: '/skills'
       preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn': {
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChangelogRoute: ChangelogRoute,
   CompareRoute: CompareRoute,
   LearnRoute: LearnRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillsRoute: SkillsRoute,
   BestAiPrototypingToolsForUxDesignersRoute:
     BestAiPrototypingToolsForUxDesignersRoute,
