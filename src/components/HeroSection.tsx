@@ -20,31 +20,6 @@ export function HeroSection() {
         }}
       />
 
-      {/* Floating chips */}
-      <div className="pointer-events-none absolute left-6 top-10 hidden animate-bounce opacity-80 md:left-[18%] md:top-28 md:block [animation-duration:6s]">
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 backdrop-blur-md">
-          <span className="h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
-          Figma AI
-        </div>
-      </div>
-      <div className="pointer-events-none absolute bottom-40 right-6 hidden animate-bounce opacity-80 md:right-[18%] md:bottom-48 md:block [animation-duration:8s]">
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 backdrop-blur-md">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-          Midjourney
-        </div>
-      </div>
-      <div className="pointer-events-none absolute right-10 top-32 hidden animate-bounce opacity-70 lg:right-[20%] lg:top-40 lg:block [animation-duration:7s] [animation-delay:1s]">
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 backdrop-blur-md">
-          <span className="h-2 w-2 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]" />
-          Framer AI
-        </div>
-      </div>
-      <div className="pointer-events-none absolute left-10 top-32 hidden animate-bounce opacity-70 lg:left-[20%] lg:top-40 lg:block [animation-duration:9s] [animation-delay:2s]">
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 backdrop-blur-md">
-          <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
-          Galileo AI
-        </div>
-      </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
         {/* Badge */}
