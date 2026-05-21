@@ -86,7 +86,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <CompareProvider>
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <CompareBar />
       <Toaster />
     </CompareProvider>
