@@ -8,6 +8,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { tools } from "@/data/tools";
+import logoUrl from "@/assets/logo.png";
+
 
 export function SiteHeader() {
   const [q, setQ] = useState("");
