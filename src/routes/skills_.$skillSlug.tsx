@@ -119,7 +119,7 @@ function SkillDetailPage() {
                 The shifts that matter
               </h2>
               <ul className="mt-3 grid gap-2.5">
-                {skill.aiImpact.shifts.map((shift) => (
+                {skill.aiImpact.shifts.map((shift: string) => (
                   <li
                     key={shift}
                     className="flex gap-2.5 rounded-xl border border-border/60 bg-surface p-4 text-sm text-surface-foreground"
@@ -136,7 +136,7 @@ function SkillDetailPage() {
                 What to do about it
               </h2>
               <ul className="mt-3 grid gap-2.5">
-                {skill.aiImpact.actions.map((action) => (
+                {skill.aiImpact.actions.map((action: string) => (
                   <li
                     key={action}
                     className="flex gap-2.5 rounded-xl border border-border/60 bg-surface p-4 text-sm text-surface-foreground"
@@ -153,7 +153,7 @@ function SkillDetailPage() {
                 Tools to try
               </h2>
               <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                {skill.toolsToTry.map((tool) => (
+                {skill.toolsToTry.map((tool: { name: string; why: string }) => (
                   <div
                     key={tool.name}
                     className="rounded-xl border border-border/60 bg-surface p-4"
