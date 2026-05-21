@@ -294,6 +294,38 @@ function SkillsPage() {
         </Card>
       </section>
 
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 pb-24">
+        <div className="mb-6 text-center">
+          <p className="mb-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Go deeper
+          </p>
+          <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+            Explore each skill in depth
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+            See how AI is reshaping each UX skill — and what to do about it.
+          </p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {skillDetails.map((s) => (
+            <Link
+              key={s.slug}
+              to="/skills/$skillSlug"
+              params={{ skillSlug: s.slug }}
+              className="filter-chip group rounded-xl border border-border bg-surface p-4 hover:bg-surface-hover"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-medium text-foreground">{s.label}</span>
+                <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{s.tagline}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   );
