@@ -204,7 +204,7 @@ function SkillDetailPage() {
             .map((s) => (
               <Link
                 key={s.slug}
-                to="/skills_/$skillSlug"
+                to="/skills/$skillSlug"
                 params={{ skillSlug: s.slug }}
                 className="filter-chip group rounded-xl border border-border bg-surface p-4 hover:bg-surface-hover"
               >
