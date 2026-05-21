@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
+import { skillDetails } from "@/data/skills";
 
 export const Route = createFileRoute("/skills")({
   head: () => ({
