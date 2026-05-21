@@ -116,7 +116,39 @@ export function SiteHeader() {
             )}
           </PopoverContent>
         </Popover>
+
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-72">
+            <SheetHeader>
+              <SheetTitle>
+                <span className="text-lg font-bold tracking-tight text-foreground">
+                  UX<span className="text-accent">Goal</span>
+                </span>
+              </SheetTitle>
+            </SheetHeader>
+            <nav className="mt-6 flex flex-col gap-1">
+              {navLinks.map((l) => (
+                <SheetClose asChild key={l.label}>
+                  <Link
+                    to={l.to}
+                    hash={"hash" in l ? l.hash : undefined}
+                    className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                    activeProps={!("hash" in l) ? { className: "bg-surface text-foreground" } : undefined}
+                  >
+                    {l.label}
+                  </Link>
+                </SheetClose>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );
+
 }
