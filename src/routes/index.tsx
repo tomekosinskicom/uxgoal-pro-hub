@@ -12,7 +12,7 @@ import { PromoteSection } from "@/components/PromoteSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ChangelogSection } from "@/components/ChangelogSection";
-import { CuratedBy } from "@/components/CuratedBy";
+
 import { tools, type Stage } from "@/data/tools";
 
 export const Route = createFileRoute("/")({
@@ -79,8 +79,6 @@ function HomePage() {
         <SeoSections />
 
         <PromoteSection />
-
-        <CuratedBy />
 
         <NewsletterSection />
 
