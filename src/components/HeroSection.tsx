@@ -39,7 +39,7 @@ export function HeroSection() {
           Framer AI
         </div>
       </div>
-      <div className="pointer-events-none absolute bottom-32 left-10 hidden animate-bounce opacity-70 lg:left-[20%] lg:bottom-40 lg:block [animation-duration:9s] [animation-delay:2s]">
+      <div className="pointer-events-none absolute bottom-56 left-10 hidden animate-bounce opacity-70 lg:left-[20%] lg:bottom-64 lg:block [animation-duration:9s] [animation-delay:2s]">
         <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 backdrop-blur-md">
           <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
           Galileo AI
