@@ -18,11 +18,15 @@ import { tools, type Stage } from "@/data/tools";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "UXGoal — Become the designer AI can't replace" },
-      { name: "description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
-      { property: "og:title", content: "UXGoal — Become the designer AI can't replace" },
-      { property: "og:description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
+      { title: "Best AI Tools for UX Designers in 2026 — UXGoal" },
+      { name: "description", content: "The curated directory of AI tools, prompts, and skills every UX and product designer needs in 2026. Free, no signup — updated weekly." },
+      { name: "keywords", content: "AI tools for UX designers, AI design tools, UX tools 2026, AI prototyping tools, product design AI, designer AI prompts, UX skill roadmap" },
+      { property: "og:title", content: "Best AI Tools for UX Designers in 2026" },
+      { property: "og:description", content: "A curated directory of AI tools, prompts, and a skill roadmap for UX and product designers." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uxgoal.com/" },
+      { name: "twitter:title", content: "Best AI Tools for UX Designers in 2026" },
+      { name: "twitter:description", content: "Curated AI tools, prompts, and skills for UX designers." },
     ],
   }),
   component: HomePage,

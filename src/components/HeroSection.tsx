@@ -7,15 +7,14 @@ export function HeroSection() {
     <section className="hero-glow relative pb-16 pt-24 md:pb-24 md:pt-32">
       <div className="mx-auto max-w-6xl px-6 text-center">
         <p className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-          For product designers, 1–5 years in.
+          The AI toolkit for product designers
         </p>
         <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight tracking-tight md:text-6xl md:leading-tight">
-          Become the designer{" "}
-          <span className="gradient-text">AI can't replace.</span>
+          Best <span className="gradient-text">AI tools for UX designers</span> in 2026
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Curated tools, practical prompts, and a skill roadmap for product designers
-          with 1–5 years of experience adapting to the AI era.
+          A curated directory of AI design tools, prompts, and a skill roadmap — so you
+          stay hireable as the field shifts. Free, no signup.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button asChild size="lg" className="gap-2">

@@ -34,22 +34,31 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "UXGoal — Become the designer AI can't replace" },
-      { name: "description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
       { name: "author", content: "UXGoal" },
-      { property: "og:title", content: "UXGoal — Become the designer AI can't replace" },
-      { property: "og:description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
-      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "UXGoal — Become the designer AI can't replace" },
-      { name: "twitter:description", content: "Curated tools, practical prompts, and a skill roadmap for product designers (1–5 yrs experience) adapting to the AI era." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/345463a6-0d0f-4317-a1c0-ccbd02e1bd1a/id-preview-c056fdb4--b26f2eab-6953-4571-9084-1022d35fd189.lovable.app-1777887692448.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/345463a6-0d0f-4317-a1c0-ccbd02e1bd1a/id-preview-c056fdb4--b26f2eab-6953-4571-9084-1022d35fd189.lovable.app-1777887692448.png" },
+      { property: "og:site_name", content: "UXGoal" },
+      { property: "og:type", content: "website" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: "https://uxgoal.com/" },
+    ],
+    scripts: [
+      { src: "https://www.googletagmanager.com/gtag/js?id=G-E7G446CSYF", async: true },
       {
-        rel: "stylesheet",
-        href: appCss,
+        children:
+          "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-E7G446CSYF');",
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "UXGoal",
+          url: "https://uxgoal.com/",
+          description:
+            "Curated AI tools, prompts, and a skill roadmap for UX and product designers.",
+        }),
       },
     ],
   }),
